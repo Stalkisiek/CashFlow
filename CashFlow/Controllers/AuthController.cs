@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
     [Route("Login")]
     public async Task<ActionResult<ServiceResponse<string>>> Login(LoginUserDto loginUserDto)
     {
-        var response = await _authRepository.Login(loginUserDto));
+        var response = await _authRepository.Login(loginUserDto);
         return StatusCode(response.StatusCode, response);
     }
 }
