@@ -2,5 +2,6 @@
 
 public enum BankAccountType
 {
-    
+    Savings = 1,
+    Credit = 2
 }
