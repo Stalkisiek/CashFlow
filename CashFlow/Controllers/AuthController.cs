@@ -3,6 +3,7 @@ using CashFlow.Dtos.Authorization;
 using CashFlow.Models;
 using CashFlow.Services.AuthServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CashFlow.Controllers;
 
@@ -21,13 +22,15 @@ public class AuthController : ControllerBase
     [Route("Register")]
     public async Task<ActionResult<ServiceResponse<int>>> Register(RegisterUserDto registerUserDto)
     {
-        return Ok(await _authRepository.Register(registerUserDto));
+        var response = await _authRepository.Register(registerUserDto);
+        return StatusCode(response.StatusCode, response);
     }
     
     [HttpPost]
     [Route("Login")]
     public async Task<ActionResult<ServiceResponse<string>>> Login(LoginUserDto loginUserDto)
     {
-        return Ok(await _authRepository.Login(loginUserDto));
+        var response = await _authRepository.Login(loginUserDto));
+        return StatusCode(response.StatusCode, response);
     }
 }

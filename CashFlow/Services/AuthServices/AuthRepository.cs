@@ -49,11 +49,13 @@ public class AuthRepository : IAuthRepository
             {
                 response.Success = false;
                 response.Message = "User not found";
+                response.StatusCode = 404;
             }
             else if (!VerifyPasswordHash(loginUserDto.Password, user.PasswordHash, user.PasswordSalt))
             {
                 response.Success = false;
                 response.Message = "Wrong password";
+                response.StatusCode = 401;
             }
             else
             {
@@ -64,6 +66,7 @@ public class AuthRepository : IAuthRepository
         {
             response.Success = false;
             response.Message = e.Message;
+            response.StatusCode = 500;
         }
 
         return Task.FromResult(response);
@@ -95,18 +98,21 @@ public class AuthRepository : IAuthRepository
                 {
                     response.Success = false;
                     response.Message = "Invalid email address";
+                    response.StatusCode = 400;
                 }
             }
             else
             {
                 response.Success = false;
                 response.Message = "User already exists";
+                response.StatusCode = 400;
             }
         }
         catch (Exception e)
         {
             response.Success = false;
             response.Message = e.Message;
+            response.StatusCode = 500;
         }
 
         return response;
