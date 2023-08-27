@@ -1,6 +1,6 @@
 ﻿namespace CashFlow.Dtos.Account;
 
-public class GetAccountDto
+public class GetUserDto
 {
     
 }

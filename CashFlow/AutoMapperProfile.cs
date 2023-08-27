@@ -1,6 +1,11 @@
-﻿namespace CashFlow;
+﻿using AutoMapper;
 
-public class AutoMapperProfile
+namespace CashFlow;
+
+public class AutoMapperProfile : Profile
 {
-    
+    public AutoMapperProfile()
+    {
+        // CreateMap<Source, Destination>();
+    }
 }
