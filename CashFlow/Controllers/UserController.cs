@@ -1,6 +1,8 @@
 ﻿using CashFlow.Dtos.Account;
+using CashFlow.Dtos.Authorization;
 using CashFlow.Dtos.User;
 using CashFlow.Models;
+using CashFlow.Services.AuthServices;
 using CashFlow.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +11,33 @@ namespace CashFlow.Controllers;
 
 [Authorize] // Moved Authorized attribute to controller level
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]s")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly IAuthRepository _authRepository;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IAuthRepository authRepository)
     {
         _userService = userService;
+        _authRepository = authRepository;
+    }
+    
+    [AllowAnonymous]
+    [HttpPost]
+    public async Task<ActionResult<ServiceResponse<int>>> Register(RegisterUserDto registerUserDto)
+    {
+        var response = await _authRepository.Register(registerUserDto);
+        return StatusCode(response.StatusCode, response);
+    }
+    
+    [AllowAnonymous]
+    [HttpPost]
+    [Route("Login")]
+    public async Task<ActionResult<ServiceResponse<string>>> Login(LoginUserDto loginUserDto)
+    {
+        var response = await _authRepository.Login(loginUserDto);
+        return StatusCode(response.StatusCode, response);
     }
     
     [HttpGet]   
@@ -40,24 +61,32 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
-    [HttpPut("updateEmail")]
+    [HttpPut("email")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateEmail(UpdateUserEmailDto updateUserEmailDto)
     {
         var response = await _userService.UpdateUserEmail(updateUserEmailDto);
         return StatusCode(response.StatusCode, response);
     }
     
-    [HttpPut("updateNames")]
+    [HttpPut("names")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateNames(UpdateUserNamesDto updateUserNamesDto)
     {
         var response = await _userService.UpdateUserNames(updateUserNamesDto);
         return StatusCode(response.StatusCode, response);
     }
     
-    [HttpPut("updateAuthLvl")]
+    [HttpPut("authLvl")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateAuthLvl(UpdateUserAuthorizationLevelDto updateUserAuthLvlDto)
     {
         var response = await _userService.UpdateUserAuthorizationLevel(updateUserAuthLvlDto);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPut("password")]
+    public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdatePassword(
+        UpdateUserPasswordDto updateUserPasswordDto)
+    {
+        var response = await _userService.UpdateUserPassword(updateUserPasswordDto);
         return StatusCode(response.StatusCode, response);
     }
 }

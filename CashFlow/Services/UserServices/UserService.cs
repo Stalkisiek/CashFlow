@@ -15,13 +15,15 @@ public class UserService : IUserService
     private readonly DataContext _context; // Database context
     private readonly IMapper _mapper; // AutoMapper for object mapping
     private readonly IHttpContextAccessor _httpContextAccessor; // Access to HTTP context
+    private readonly IAuthRepository _authRepository;
 
     // Constructor to initialize dependencies through dependency injection
-    public UserService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    public UserService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IAuthRepository authRepository)
     {
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
+        _authRepository = authRepository;
     }
 
     // Helper method to extract the current user's ID from the claims
@@ -351,12 +353,57 @@ public class UserService : IUserService
 
         return response;
     }
-
-
+    
     // Method to update a user's password (Not implemented)
-    public Task<ServiceResponse<GetUserDto>> UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto)
+    public async Task<ServiceResponse<GetUserDto>> UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto)
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<GetUserDto>();
+        try
+        {
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+            if (user is null)
+            {
+                //User not found
+                response.Success = false;
+                response.Message = "User not found";
+                response.StatusCode = 404;
+                return response;
+            }
+
+            if (!_authRepository.VerifyPasswordHash(updateUserPasswordDto.CurrentPassword, user.PasswordHash,
+                    user.PasswordSalt))
+            {
+                response.Success = false;
+                response.Message = "Unauthorized";
+                response.StatusCode = 401;
+                return response;
+            }
+            else if (updateUserPasswordDto.CurrentPassword == updateUserPasswordDto.NewPassword)
+            {
+                response.Success = false;
+                response.Message = "New password same as old one";
+                response.StatusCode = 400;
+                return response;
+            }
+            else
+            {
+                _authRepository.CreatePasswordHash(updateUserPasswordDto.NewPassword, 
+                    out var passwordHash, out var passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+                response.Data = _mapper.Map<GetUserDto>(user);
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception e)
+        {
+            //Internal error
+            response.Success = false;
+            response.StatusCode = 500;
+            response.Message = e.Message;
+        }
+
+        return response;
     }
 
     // Method to delete a user (Not implemented)

@@ -131,7 +131,7 @@ public class AuthRepository : IAuthRepository
     // Helper methods for handling password operations
 
     // Method to create a password hash and salt
-    private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+    public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         using var hmac = new System.Security.Cryptography.HMACSHA512();
         passwordSalt = hmac.Key;
@@ -139,7 +139,7 @@ public class AuthRepository : IAuthRepository
     }
 
     // Method to verify a password hash and salt
-    private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+    public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
     {
         using var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt);
         var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
