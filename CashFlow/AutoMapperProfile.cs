@@ -11,5 +11,6 @@ public class AutoMapperProfile : Profile
     {
         // CreateMap<Source, Destination>();
         CreateMap<RegisterUserDto, User>();
+        CreateMap<User, GetUserDto>();
     }
 }

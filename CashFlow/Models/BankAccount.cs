@@ -13,5 +13,5 @@ public class BankAccount : Entity
     {
         Name = Type.ToString() + "_" + Id;
     }
-    
+    public User? User { get; set; }
 }

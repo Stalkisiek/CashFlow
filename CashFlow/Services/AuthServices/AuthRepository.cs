@@ -30,15 +30,6 @@ public class AuthRepository : IAuthRepository
         return user is not null;
     }
     
-    static bool IsValidEmail(string email)
-    {
-        // Defining a regular expression pattern for a valid email address
-        string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-
-        // Using Regex.IsMatch to check if the email matches the pattern
-        return Regex.IsMatch(email, pattern);
-    }
-    
     public Task<ServiceResponse<string>> Login(LoginUserDto loginUserDto)
     {
         var response = new ServiceResponse<string>();
@@ -79,7 +70,7 @@ public class AuthRepository : IAuthRepository
         {
             if (!await UserExists(registerUserDto.Email))
             {
-                if (IsValidEmail(registerUserDto.Email))
+                if (SyntaxChecker.IsValidEmail(registerUserDto.Email))
                 {
                     CreatePasswordHash(registerUserDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
                     var user = _mapper.Map<User>(registerUserDto);
