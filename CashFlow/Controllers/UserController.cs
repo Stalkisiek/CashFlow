@@ -50,4 +50,12 @@ public class UserController : ControllerBase
         var response = await _userService.UpdateUserNames(updateUserNamesDto);
         return StatusCode(response.StatusCode, response);
     }
+    
+    [Authorize]
+    [HttpPut("updateAuthLvl")]
+    public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateAuthLvl(UpdateUserAuthorizationLevelDto updateUserAuthLvlDto)
+    {
+        var response = await _userService.UpdateUserAuthorizationLevel(updateUserAuthLvlDto);
+        return StatusCode(response.StatusCode, response);
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using AutoMapper;
 using CashFlow.Data;
 using CashFlow.Dtos.Authorization;
@@ -11,50 +10,58 @@ namespace CashFlow.Services.AuthServices;
 
 public class AuthRepository : IAuthRepository
 {
-    private readonly DataContext _context;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IMapper _mapper;
-    private readonly IConfiguration _configuration;
+    private readonly DataContext _context; // Database context
+    private readonly IHttpContextAccessor _httpContextAccessor; // Access to HTTP context
+    private readonly IMapper _mapper; // AutoMapper for object mapping
+    private readonly IConfiguration _configuration; // Configuration for app settings
 
-    public AuthRepository(DataContext context, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+    public AuthRepository(DataContext context, IMapper mapper, IConfiguration configuration,
+        IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
         _mapper = mapper;
         _configuration = configuration;
     }
-    
+
+    // Check if a user with the given email exists in the database
     public async Task<bool> UserExists(string email)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         return user is not null;
     }
-    
+
+    // Method to handle user login
     public Task<ServiceResponse<string>> Login(LoginUserDto loginUserDto)
     {
         var response = new ServiceResponse<string>();
         try
         {
+            // Retrieve the user based on the provided email
             var user = _context.Users.FirstOrDefault(u => u.Email == loginUserDto.Email);
             if (user is null)
             {
+                // User not found
                 response.Success = false;
                 response.Message = "User not found";
                 response.StatusCode = 404;
             }
             else if (!VerifyPasswordHash(loginUserDto.Password, user.PasswordHash, user.PasswordSalt))
             {
+                // Incorrect password
                 response.Success = false;
                 response.Message = "Wrong password";
                 response.StatusCode = 401;
             }
             else
             {
+                // Create and return a JWT token upon successful login
                 response.Data = CreateToken(user);
             }
         }
         catch (Exception e)
         {
+            // Internal server error
             response.Success = false;
             response.Message = e.Message;
             response.StatusCode = 500;
@@ -63,30 +70,34 @@ public class AuthRepository : IAuthRepository
         return Task.FromResult(response);
     }
 
+    // Method to register a new user
     public async Task<ServiceResponse<int>> Register(RegisterUserDto registerUserDto)
     {
         var response = new ServiceResponse<int>();
         try
         {
+            // Check if user with provided email already exists
             if (!await UserExists(registerUserDto.Email))
             {
+                // Validate email format using SyntaxChecker and proceed with registration
                 if (SyntaxChecker.IsValidEmail(registerUserDto.Email))
                 {
-                    CreatePasswordHash(registerUserDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                    CreatePasswordHash(registerUserDto.Password, out var passwordHash, out var passwordSalt);
                     var user = _mapper.Map<User>(registerUserDto);
-                    user.PasswordHash = passwordHash; // Assign the generated hash
-                    user.PasswordSalt = passwordSalt; // Assign the generated salt
-                    user.AuthorizationLevel = AuthorizationLevel.User; // Set the authorization level
-                    user.CreatedAt = DateTime.Now; // Set the creation date
-                    user.UpdatedAt = DateTime.Now; // Set the update date
+                    user.PasswordHash = passwordHash;
+                    user.PasswordSalt = passwordSalt;
+                    user.AuthorizationLevel = AuthorizationLevel.User;
+                    user.CreatedAt = DateTime.Now;
+                    user.UpdatedAt = DateTime.Now;
 
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 
-                    response.Data = user.Id; // Set the newly created user's ID in the response data
+                    response.Data = user.Id; // Newly created user's ID
                 }
                 else
                 {
+                    // Invalid email format
                     response.Success = false;
                     response.Message = "Invalid email address";
                     response.StatusCode = 400;
@@ -94,6 +105,7 @@ public class AuthRepository : IAuthRepository
             }
             else
             {
+                // User already exists
                 response.Success = false;
                 response.Message = "User already exists";
                 response.StatusCode = 400;
@@ -101,6 +113,7 @@ public class AuthRepository : IAuthRepository
         }
         catch (Exception e)
         {
+            // Internal server error
             response.Success = false;
             response.Message = e.Message;
             response.StatusCode = 500;
@@ -108,41 +121,45 @@ public class AuthRepository : IAuthRepository
 
         return response;
     }
-    
+
+    // Helper method to extract the current user's ID from the claims
     private int GetUserId()
     {
         return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
-    
-    /////// PASSWORD THINGS ///////
+
+    // Helper methods for handling password operations
+
+    // Method to create a password hash and salt
     private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         using var hmac = new System.Security.Cryptography.HMACSHA512();
         passwordSalt = hmac.Key;
         passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
     }
+
+    // Method to verify a password hash and salt
     private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
     {
         using var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt);
         var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         return computedHash.SequenceEqual(passwordHash);
     }
+
+    // Method to create a JWT token
     private string CreateToken(User user)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email)
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email)
         };
 
         var appSettingToken = _configuration.GetSection("AppSettings:Token").Value;
-        if (appSettingToken is null)
-        {
-            throw new Exception("AppSettings Token is null");
-        }
+        if (appSettingToken is null) throw new Exception("AppSettings Token is null");
 
-        SymmetricSecurityKey key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(appSettingToken));
-        SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(appSettingToken));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -151,8 +168,8 @@ public class AuthRepository : IAuthRepository
             SigningCredentials = creds
         };
 
-        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return tokenHandler.WriteToken(token);
     }
