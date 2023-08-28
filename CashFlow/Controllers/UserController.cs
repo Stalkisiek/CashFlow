@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Controllers;
 
+[Authorize] // Moved Authorized attribute to controller level
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
@@ -18,8 +19,6 @@ public class UserController : ControllerBase
         _userService = userService;
     }
     
-    
-    [Authorize]
     [HttpGet]   
     public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> GetAllUsers()
     {
@@ -27,7 +26,13 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
-    [Authorize]
+    [HttpGet("current")]
+    public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetCurrentUser()
+    {
+        var response = await _userService.GetCurrentUser();
+        return StatusCode(response.StatusCode, response);
+    }
+    
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetUserById(int id)
     {
@@ -35,7 +40,6 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
-    [Authorize]
     [HttpPut("updateEmail")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateEmail(UpdateUserEmailDto updateUserEmailDto)
     {
@@ -43,7 +47,6 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
-    [Authorize]
     [HttpPut("updateNames")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateNames(UpdateUserNamesDto updateUserNamesDto)
     {
@@ -51,7 +54,6 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
-    [Authorize]
     [HttpPut("updateAuthLvl")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateAuthLvl(UpdateUserAuthorizationLevelDto updateUserAuthLvlDto)
     {

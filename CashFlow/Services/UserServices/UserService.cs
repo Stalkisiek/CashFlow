@@ -73,6 +73,36 @@ public class UserService : IUserService
         return response;
     }
 
+    // Method to retrieve the current user
+    public async Task<ServiceResponse<GetUserDto>> GetCurrentUser()
+    {
+        var response = new ServiceResponse<GetUserDto>();
+        try
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+            if (user != null)
+            {
+                // Map the user to GetUserDto and return
+                response.Data = _mapper.Map<GetUserDto>(user);
+            }
+            else
+            {
+                // User not found
+                response.Success = false;
+                response.Message = "User not found";
+                response.StatusCode = 404;
+            }
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
+    }
+    
     // Method to retrieve a user by their ID, subject to authorization level
     public async Task<ServiceResponse<GetUserDto>> GetUserById(int id)
     {

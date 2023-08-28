@@ -8,6 +8,7 @@ namespace CashFlow.Services.UserServices;
 public interface IUserService
 {
     Task<ServiceResponse<List<GetUserDto>>> GetAllUsers();
+    Task<ServiceResponse<GetUserDto>> GetCurrentUser();
     Task<ServiceResponse<GetUserDto>> GetUserById(int id);
     Task<ServiceResponse<GetUserDto>> UpdateUserEmail(UpdateUserEmailDto updatedUserEmail);
     Task<ServiceResponse<GetUserDto>> UpdateUserNames(UpdateUserNamesDto updateUserNamesDto);
