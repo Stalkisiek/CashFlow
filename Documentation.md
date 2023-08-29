@@ -87,6 +87,8 @@ Used for communication between methods and HTTP requests, keeping information mi
 ### DataContext
 Responsible for database creation and OnModelCreating method overrides.
 
+## Services
+
 ### User
 Methods declared in IUserService and implemented in UserService. Called in UserController.
 Controller returns ActionResult with appropriate StatusCode (response.StatusCode) and response content.
