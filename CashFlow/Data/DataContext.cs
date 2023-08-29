@@ -34,4 +34,6 @@ public class DataContext : DbContext
     }
     public DbSet<User> Users => Set<User>();
     public DbSet<BankAccount> BankAccounts => Set<BankAccount>();
+    public DbSet<Request> Requests => Set<Request>();
+    public DbSet<PreviousRequest> PreviousRequests => Set<PreviousRequest>();
 }

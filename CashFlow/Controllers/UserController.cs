@@ -23,22 +23,22 @@ public class UserController : ControllerBase
         _authRepository = authRepository;
     }
     
-    [AllowAnonymous]
-    [HttpPost]
-    public async Task<ActionResult<ServiceResponse<int>>> Register(RegisterUserDto registerUserDto)
-    {
-        var response = await _authRepository.Register(registerUserDto);
-        return StatusCode(response.StatusCode, response);
-    }
-    
-    [AllowAnonymous]
-    [HttpPost]
-    [Route("Login")]
-    public async Task<ActionResult<ServiceResponse<string>>> Login(LoginUserDto loginUserDto)
-    {
-        var response = await _authRepository.Login(loginUserDto);
-        return StatusCode(response.StatusCode, response);
-    }
+    // [AllowAnonymous]
+    // [HttpPost]
+    // public async Task<ActionResult<ServiceResponse<int>>> Register(RegisterUserDto registerUserDto)
+    // {
+    //     var response = await _authRepository.Register(registerUserDto);
+    //     return StatusCode(response.StatusCode, response);
+    // }
+    //
+    // [AllowAnonymous]
+    // [HttpPost]
+    // [Route("Login")]
+    // public async Task<ActionResult<ServiceResponse<string>>> Login(LoginUserDto loginUserDto)
+    // {
+    //     var response = await _authRepository.Login(loginUserDto);
+    //     return StatusCode(response.StatusCode, response);
+    // }
     
     [HttpGet]   
     public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> GetAllUsers()
@@ -87,6 +87,20 @@ public class UserController : ControllerBase
         UpdateUserPasswordDto updateUserPasswordDto)
     {
         var response = await _userService.UpdateUserPassword(updateUserPasswordDto);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<ServiceResponse<string>>> DeleteCurrentUser()
+    {
+        var response = await _userService.DeleteCurrentUser();
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult<List<GetUserDto>>> DeleteUserById(int id)
+    {
+        var response = await _userService.DeleteUserById(id);
         return StatusCode(response.StatusCode, response);
     }
 }

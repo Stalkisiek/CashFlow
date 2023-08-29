@@ -3,9 +3,11 @@ using AutoMapper;
 using CashFlow.Data;
 using CashFlow.Dtos.Account;
 using CashFlow.Dtos.Authorization;
+using CashFlow.Dtos.Request;
 using CashFlow.Dtos.User;
 using CashFlow.Models;
 using CashFlow.Services.AuthServices;
+using CashFlow.Services.RequestServices;
 
 namespace CashFlow.Services.UserServices;
 
@@ -16,14 +18,17 @@ public class UserService : IUserService
     private readonly IMapper _mapper; // AutoMapper for object mapping
     private readonly IHttpContextAccessor _httpContextAccessor; // Access to HTTP context
     private readonly IAuthRepository _authRepository;
+    private readonly IRequestService _requestService;
 
     // Constructor to initialize dependencies through dependency injection
-    public UserService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IAuthRepository authRepository)
+    public UserService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, 
+        IAuthRepository authRepository, IRequestService requestService)
     {
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
         _authRepository = authRepository;
+        _requestService = requestService;
     }
 
     // Helper method to extract the current user's ID from the claims
@@ -406,9 +411,109 @@ public class UserService : IUserService
         return response;
     }
 
-    // Method to delete a user (Not implemented)
-    public Task<ServiceResponse<List<GetUserDto>>> DeleteUser(int id)
+    public async Task<ServiceResponse<List<GetUserDto>>> DeleteUserById(int id)
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<List<GetUserDto>>();
+        try
+        {
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user is null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                response.StatusCode = 404;
+                return response;
+            }
+            
+            if ((await GetUserAuthLvl() > (int)AuthorizationLevel.User && await GetUserAuthLvl() > (int)user.AuthorizationLevel))
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                response.Data = await _context.Users.Select(u => _mapper.Map<GetUserDto>(u)).ToListAsync();
+            }
+            else if(id == GetUserId())
+            {
+                AddRequestDto addRequestDto = new AddRequestDto
+                {
+                    Type = RequestType.DeleteUser
+                };
+                
+                var temp = await _requestService.CreateRequest(addRequestDto);
+                if (temp.StatusCode != 200)
+                {
+                    response.Success = false;
+                    response.Message = temp.Message;
+                    response.StatusCode = temp.StatusCode;
+                    return response;
+                }
+                response.Message = "Request created";
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "Unauthorized";
+                response.StatusCode = 401;
+            }
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
+    }
+
+    // Method to delete a user (Not implemented)
+    public async Task<ServiceResponse<string>> DeleteCurrentUser()
+    {
+        var response = new ServiceResponse<string>
+        {
+            Data = string.Empty
+        };
+        try
+        {
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+            if (user is null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                response.StatusCode = 404;
+                return response;
+            }
+
+            if (await GetUserAuthLvl() > (int)AuthorizationLevel.User)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                response.StatusCode = 200;
+            }
+            else
+            {
+                AddRequestDto addRequestDto = new AddRequestDto
+                {
+                    Type = RequestType.DeleteUser
+                };
+                
+                var temp = await _requestService.CreateRequest(addRequestDto);
+                if (temp.StatusCode != 200)
+                {
+                    response.Success = false;
+                    response.Message = temp.Message;
+                    response.StatusCode = temp.StatusCode;
+                    return response;
+                }
+                response.Message = "Request created";
+            }
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace CashFlow.Dtos.Account;
 
+
 public class GetUserDto
 {
     public int Id { get; set; }
@@ -11,5 +12,4 @@ public class GetUserDto
     public AuthorizationLevel AuthorizationLevel { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public List<Models.BankAccount>? BankAccounts { get; set; }
 }

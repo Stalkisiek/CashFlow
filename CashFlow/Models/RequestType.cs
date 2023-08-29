@@ -3,7 +3,8 @@
 public enum RequestType
 {
     DeleteUser = 1,
-    AddMoney = 2,
-    AddCredit = 3,
-    RemoveCredit = 4
+    DeleteAccount = 2,
+    AddMoney = 3,
+    AddCredit = 4,
+    RemoveCredit = 5
 }

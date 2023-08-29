@@ -2,6 +2,7 @@ global using Microsoft.AspNetCore.Http;
 
 using CashFlow.Data;
 using CashFlow.Services.AuthServices;
+using CashFlow.Services.RequestServices;
 using CashFlow.Services.UserServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -46,6 +47,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRequestService, RequestService>();
 
 var app = builder.Build();
 

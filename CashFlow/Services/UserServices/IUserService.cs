@@ -14,5 +14,6 @@ public interface IUserService
     Task<ServiceResponse<GetUserDto>> UpdateUserNames(UpdateUserNamesDto updateUserNamesDto);
     Task<ServiceResponse<GetUserDto>> UpdateUserAuthorizationLevel(UpdateUserAuthorizationLevelDto updateUserAuthorizationLevelDto);
     Task<ServiceResponse<GetUserDto>> UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto);
-    Task<ServiceResponse<List<GetUserDto>>> DeleteUser(int id);
+    Task<ServiceResponse<string>> DeleteCurrentUser();
+    Task<ServiceResponse<List<GetUserDto>>> DeleteUserById(int id);
 }
