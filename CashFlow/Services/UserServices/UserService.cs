@@ -197,6 +197,7 @@ public class UserService : IUserService
                 else
                 {
                     user.Email = updatedUserEmail.Email;
+                    user.UpdatedAt = DateTime.Now;
                     response.Data = _mapper.Map<GetUserDto>(user);
                 }
 
@@ -268,6 +269,7 @@ public class UserService : IUserService
                     // Update user's name and surname
                     user.Name = updateUserNamesDto.Name;
                     user.Surname = updateUserNamesDto.Surname;
+                    user.UpdatedAt = DateTime.Now;
                     response.Data = _mapper.Map<GetUserDto>(user);
                 }
 
@@ -335,6 +337,7 @@ public class UserService : IUserService
                 {
                     // Update user's authorization level
                     user.AuthorizationLevel = updateUserAuthorizationLevelDto.AuthorizationLevel;
+                    user.UpdatedAt = DateTime.Now;
                     response.Data = _mapper.Map<GetUserDto>(user);
                 }
 
@@ -396,6 +399,7 @@ public class UserService : IUserService
                     out var passwordHash, out var passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
+                user.UpdatedAt = DateTime.Now;
                 response.Data = _mapper.Map<GetUserDto>(user);
                 await _context.SaveChangesAsync();
             }
