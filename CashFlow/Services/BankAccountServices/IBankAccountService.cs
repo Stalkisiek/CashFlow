@@ -15,5 +15,5 @@ public interface IBankAccountService
     Task<ServiceResponse<GetBankAccountDto>> SubtractBalance(int id, double amount);
     Task<ServiceResponse<GetBankAccountDto>> TransferBalance(int id, int targetId, double amount);
     Task<ServiceResponse<GetBankAccountDto>> AddCredit(int id, double amount);
-    Task<ServiceResponse<GetBankAccountDto>> SubtractCredit(int id, double amount); // Move money from balance to credit (deleting credit)
+    Task<ServiceResponse<GetBankAccountDto>> PayCredit(int id, double amount); // Move money from balance to credit (deleting credit)
 }

@@ -81,6 +81,22 @@ public class BankAccountController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
+    [HttpPut]
+    [Route("{id:int}/credit")]
+    public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> AddCredit(int id, double amount)
+    {
+        var response = await _bankAccountService.AddCredit(id, amount);
+        return StatusCode(response.StatusCode, response);
+    }
+    
+    [HttpPut]
+    [Route("{id:int}/paycredit")]
+    public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> PayCredit(int id, double amount)
+    {
+        var response = await _bankAccountService.PayCredit(id, amount);
+        return StatusCode(response.StatusCode, response);
+    }
+    
     [HttpDelete]
     [Route("{id:int}")]
     public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> Delete(int id)

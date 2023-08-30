@@ -1,11 +1,8 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
 using CashFlow.Data;
-using CashFlow.Dtos.Account;
 using CashFlow.Dtos.Request;
 using CashFlow.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace CashFlow.Services.RequestServices;
 
@@ -139,6 +136,14 @@ public class RequestService : IRequestService
                 response.Data = _mapper.Map<GetRequestDto>(request);
             }
             else if(addRequestDto.Type == RequestType.AddMoney)
+            {
+                request.UserId = GetUserId();
+                _context.Requests.Add(request);
+                await _context.SaveChangesAsync();
+
+                response.Data = _mapper.Map<GetRequestDto>(request);
+            }
+            else if(addRequestDto.Type == RequestType.AddCredit)
             {
                 request.UserId = GetUserId();
                 _context.Requests.Add(request);
@@ -289,6 +294,35 @@ public class RequestService : IRequestService
                     previousRequest.Status = RequestAcceptMode.Accepted;
 
                     bankAccount.Balance += request.AmountBalance;
+                    
+                    _context.Requests.Remove(request);
+                    await _context.SaveChangesAsync();
+                    return response;
+                }
+            }
+            else if (request.Type == RequestType.AddCredit) // Delete Account handler
+            {
+                BankAccount? bankAccount =
+                    await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == request.AccountId);
+                response.Data = request.Id;
+                if (bankAccount is null)
+                {
+                    response.Success = false;
+                    response.StatusCode = 404;
+                    response.Message = "Not found";
+                    
+                    previousRequest.Message = "Account doesnt exist";
+                    previousRequest.Status = RequestAcceptMode.Deleted;
+                    _context.Requests.Remove(request);
+                    await _context.SaveChangesAsync();
+                    return response;
+                }
+                else
+                {
+                    previousRequest.Status = RequestAcceptMode.Accepted;
+
+                    bankAccount.CreditBalance += request.AmountCredit;
+                    bankAccount.Balance += request.AmountCredit;
                     
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();

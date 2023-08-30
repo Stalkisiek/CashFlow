@@ -11,6 +11,8 @@ namespace CashFlow.Services.BankAccountServices;
 
 public class BankAccountService : IBankAccountService
 {
+    private const int SavingsMaxCredit = 1000;
+    private const int CreditMaxCredit = 10000;
     private readonly IMapper _mapper;
     private readonly DataContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -459,6 +461,14 @@ public class BankAccountService : IBankAccountService
                 return response;
             }
 
+            if (userBankAccount.UserId != GetUserId())
+            {
+                response.Success = false;
+                response.StatusCode = 401;
+                response.Message = "Unauthorized";
+                return response;
+            }
+            
             if (userBankAccount.Balance - amount < 0)
             {
                 response.Success = false;
@@ -483,13 +493,156 @@ public class BankAccountService : IBankAccountService
         return response;
     }
 
-    public Task<ServiceResponse<GetBankAccountDto>> AddCredit(int id, double amount)
+    public async Task<ServiceResponse<GetBankAccountDto>> AddCredit(int id, double amount)
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<GetBankAccountDto>();
+        try
+        {
+            var bankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == id);
+            if (bankAccount is null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                response.StatusCode = 404;
+                return response;
+            }
+            if (await GetUserAuthLvl() > (int)AuthorizationLevel.User)
+            {
+                switch (bankAccount.Type)
+                {
+                    case BankAccountType.Savings:
+                        if (bankAccount.CreditBalance + amount > SavingsMaxCredit)
+                        {
+                            response.Success = false;
+                            response.StatusCode = 400;
+                            response.Message = $"Savings account can only have {SavingsMaxCredit} credit";
+                            return response;
+                        }
+
+                        bankAccount.Balance += amount;
+                        bankAccount.CreditBalance += amount;
+                        await _context.SaveChangesAsync();
+                        await _updateService.UpdateAll();
+                        response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
+                        return response;
+                    case BankAccountType.Credit:
+                        if (bankAccount.CreditBalance + amount > CreditMaxCredit)
+                        {
+                            response.Success = false;
+                            response.StatusCode = 400;
+                            response.Message = $"Credit account can only have {CreditMaxCredit} credit";
+                            return response;
+                        }
+
+                        bankAccount.Balance += amount;
+                        bankAccount.CreditBalance += amount;
+                        await _context.SaveChangesAsync();
+                        await _updateService.UpdateAll();
+                        response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
+                        return response;
+                }
+            }
+            else
+            {
+                if (bankAccount.UserId != GetUserId())
+                {
+                    response.Success = false;
+                    response.StatusCode = 401;
+                    response.Message = "Unauthorized";
+                    return response;
+                }
+
+                switch (bankAccount.Type)
+                {
+                    case BankAccountType.Savings:
+                        if (bankAccount.CreditBalance + amount > SavingsMaxCredit)
+                        {
+                            response.Success = false;
+                            response.StatusCode = 400;
+                            response.Message = $"Savings account can only have {SavingsMaxCredit} credit";
+                            return response;
+                        }
+                        break;
+                    case BankAccountType.Credit:
+                        if (bankAccount.CreditBalance + amount > CreditMaxCredit)
+                        {
+                            response.Success = false;
+                            response.StatusCode = 400;
+                            response.Message = $"Credit account can only have {CreditMaxCredit} credit";
+                            return response;
+                        }
+
+                        break;
+                }
+
+                AddRequestDto addRequestDto = new AddRequestDto
+                {
+                    Type = RequestType.AddCredit,
+                    AccountId = id,
+                    AmountCredit = amount
+                };
+               
+                var tempResponse = await _requestService.CreateRequest(addRequestDto);
+                response.Message = tempResponse.Message != string.Empty ? tempResponse.Message : "Request created";
+                response.Success = tempResponse.Success;
+                response.StatusCode = tempResponse.StatusCode;
+                await _updateService.UpdateAll();
+            }
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
     }
 
-    public Task<ServiceResponse<GetBankAccountDto>> SubtractCredit(int id, double amount)
+    public async Task<ServiceResponse<GetBankAccountDto>> PayCredit(int id, double amount)
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<GetBankAccountDto>();
+        try
+        {
+            var bankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == id);
+            if (bankAccount is null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                response.StatusCode = 404;
+                return response;
+            }
+            if (bankAccount.UserId == GetUserId() || await GetUserAuthLvl() > (int)AuthorizationLevel.User)
+            {
+                if (bankAccount.Balance - amount < 0)
+                {
+                    response.Success = false;
+                    response.Message = "Not sufficient funds";
+                    response.StatusCode = 400;
+                    return response;
+                }
+
+                bankAccount.CreditBalance -= amount;
+                bankAccount.Balance -= amount;
+                
+                if (bankAccount.CreditBalance < 0)
+                {
+                    bankAccount.Balance += double.Abs(bankAccount.CreditBalance);
+                    bankAccount.CreditBalance = 0;
+                }
+
+                await _context.SaveChangesAsync();
+                await _updateService.UpdateAll();
+                response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
+            }
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
     }
 }
