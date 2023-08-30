@@ -33,4 +33,12 @@ public class BankAccountController : ControllerBase
         var response = await _bankAccountService.GetBankAccountById(id);
         return StatusCode(response.StatusCode, response);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> GetAll()
+    {
+        var response = await _bankAccountService.GetAllBankAccounts();
+        return StatusCode(response.StatusCode, response);
+    }
+    
 }

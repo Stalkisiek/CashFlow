@@ -32,9 +32,29 @@ public class BankAccountService : IBankAccountService
         return user is null ? -1 : (int)user.AuthorizationLevel;
     }
     
-    public Task<ServiceResponse<List<GetBankAccountDto>>> GetAllBankAccounts()
+    public async Task<ServiceResponse<List<GetBankAccountDto>>> GetAllBankAccounts()
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<List<GetBankAccountDto>>();
+        try
+        {
+            if (!(await GetUserAuthLvl() > (int)AuthorizationLevel.User))
+            {
+                response.Success = false;
+                response.StatusCode = 401;
+                response.Message = "Unauthorized";
+                return response;
+            }
+            
+            response.Data = await _context.BankAccounts.Select(b => _mapper.Map<GetBankAccountDto>(b)).ToListAsync();
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
     }
 
     public Task<ServiceResponse<List<GetBankAccountDto>>> GetAllWithinUser()
