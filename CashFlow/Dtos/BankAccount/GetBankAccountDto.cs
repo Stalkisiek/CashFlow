@@ -1,4 +1,5 @@
-﻿using CashFlow.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using CashFlow.Models;
 
 namespace CashFlow.Dtos.BankAccount;
 

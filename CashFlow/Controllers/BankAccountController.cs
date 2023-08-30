@@ -3,7 +3,6 @@ using CashFlow.Models;
 using CashFlow.Services.BankAccountServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace CashFlow.Controllers;
 
@@ -58,6 +57,30 @@ public class BankAccountController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
+    [HttpPut]
+    [Route("{id:int}/addBalance")]
+    public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> AddBalance(int id, double amount)
+    {
+        var response = await _bankAccountService.AddBalance(id, amount);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPut]
+    [Route("{id:int}/subtractBalance")]
+    public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> SubtractBalance(int id, double amount)
+    {
+        var response = await _bankAccountService.SubtractBalance(id, amount);
+        return StatusCode(response.StatusCode, response);
+    }
+    
+    [HttpPut]
+    [Route("{id:int}/transfer")]
+    public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> SubtractBalance(int id, int targetId, double amount)
+    {
+        var response = await _bankAccountService.TransferBalance(id, targetId, amount);
+        return StatusCode(response.StatusCode, response);
+    }
+    
     [HttpDelete]
     [Route("{id:int}")]
     public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> Delete(int id)

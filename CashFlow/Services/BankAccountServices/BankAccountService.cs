@@ -290,9 +290,7 @@ public class BankAccountService : IBankAccountService
                     AddRequestDto addRequestDto = new AddRequestDto
                     {
                         Type = RequestType.DeleteAccount,
-                        AccountId = id,
-                        AmountBalance = bankAccount.Balance,
-                        AmountCredit = bankAccount.CreditBalance
+                        AccountId = id
                     };
                     var tempResponse = await _requestService.CreateRequest(addRequestDto);
                     response.Message = tempResponse.Message != string.Empty ? tempResponse.Message : "Request created";
@@ -312,27 +310,185 @@ public class BankAccountService : IBankAccountService
         return response;
     }
 
-    public Task<ServiceResponse<GetBankAccountDto>> AddBalance(int id, decimal amount)
+    public async Task<ServiceResponse<GetBankAccountDto>> AddBalance(int id, double amount)
+    {
+        var response = new ServiceResponse<GetBankAccountDto>();
+        try
+        {
+            var bankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == id);
+            if (bankAccount is null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                response.StatusCode = 404;
+                return response;
+            }
+
+            if (amount <= 0)
+            {
+                response.Success = false;
+                response.Message = "Bad input. Only >0";
+                response.StatusCode = 400;
+                return response;
+            }
+            if (await GetUserAuthLvl() > (int)AuthorizationLevel.User)
+            {
+                bankAccount.Balance += bankAccount.Balance;
+                await _context.SaveChangesAsync();
+                await _updateService.UpdateAll();
+                response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
+                return response;
+            }
+            else
+            {
+                if (bankAccount.UserId != GetUserId())
+                {
+                    response.Success = false;
+                    response.StatusCode = 401;
+                    response.Message = "Unauthorized";
+                    return response;
+                }
+
+                AddRequestDto addRequestDto = new AddRequestDto
+                {
+                    Type = RequestType.AddMoney,
+                    AccountId = id,
+                    AmountBalance = amount
+                };
+                var tempResponse = await _requestService.CreateRequest(addRequestDto);
+                response.Message = tempResponse.Message != string.Empty ? tempResponse.Message : "Request created";
+                response.Success = tempResponse.Success;
+                response.StatusCode = tempResponse.StatusCode;
+                await _updateService.UpdateAll();
+            }
+            
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
+    }
+
+    public async Task<ServiceResponse<GetBankAccountDto>> SubtractBalance(int id, double amount)
+    {
+        var response = new ServiceResponse<GetBankAccountDto>();
+        try
+        {
+            var bankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == id);
+            if (bankAccount is null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                response.StatusCode = 404;
+                return response;
+            }
+
+            if (amount <= 0)
+            {
+                response.Success = false;
+                response.Message = "Bad input. Only >0";
+                response.StatusCode = 400;
+                return response;
+            }
+
+            if (await GetUserAuthLvl() > (int)AuthorizationLevel.User)
+            {
+                if (bankAccount.Balance - amount < 0)
+                {
+                    response.Success = false;
+                    response.Message = "Not sufficient funds";
+                    response.StatusCode = 400;
+                    return response;
+                }
+
+                bankAccount.Balance -= amount;
+                await _context.SaveChangesAsync();
+                await _updateService.UpdateAll();
+                response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
+            }
+            else
+            {
+                if (bankAccount.Balance - amount < 0)
+                {
+                    response.Success = false;
+                    response.Message = "Not sufficient funds";
+                    response.StatusCode = 400;
+                    return response;
+                }
+                if (bankAccount.UserId != GetUserId())
+                {
+                    response.Success = false;
+                    response.StatusCode = 401;
+                    response.Message = "Unauthorized";
+                    return response;
+                }
+                
+                bankAccount.Balance -= amount;
+                await _context.SaveChangesAsync();
+                await _updateService.UpdateAll();
+                response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
+            }
+            
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
+    }
+
+    public async Task<ServiceResponse<GetBankAccountDto>> TransferBalance(int id, int targetId, double amount)
+    {
+        var response = new ServiceResponse<GetBankAccountDto>();
+        try
+        {
+            var userBankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == id);
+            var targetBankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == targetId);
+            if (userBankAccount is null || targetBankAccount is null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                response.StatusCode = 404;
+                return response;
+            }
+
+            if (userBankAccount.Balance - amount < 0)
+            {
+                response.Success = false;
+                response.Message = "Not sufficient funds";
+                response.StatusCode = 400;
+                return response;
+            }
+
+            userBankAccount.Balance -= amount;
+            targetBankAccount.Balance += amount;
+            await _context.SaveChangesAsync();
+            await _updateService.UpdateAll();
+            response.Data = _mapper.Map<GetBankAccountDto>(userBankAccount);
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
+    }
+
+    public Task<ServiceResponse<GetBankAccountDto>> AddCredit(int id, double amount)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResponse<GetBankAccountDto>> SubtractBalance(int id, decimal amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResponse<GetBankAccountDto>> TransferBalance(int id, int targetId, decimal amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResponse<GetBankAccountDto>> AddCredit(int id, decimal amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResponse<GetBankAccountDto>> SubtractCredit(int id, decimal amount)
+    public Task<ServiceResponse<GetBankAccountDto>> SubtractCredit(int id, double amount)
     {
         throw new NotImplementedException();
     }

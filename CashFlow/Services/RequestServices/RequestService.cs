@@ -138,9 +138,13 @@ public class RequestService : IRequestService
 
                 response.Data = _mapper.Map<GetRequestDto>(request);
             }
-            else
+            else if(addRequestDto.Type == RequestType.AddMoney)
             {
-                
+                request.UserId = GetUserId();
+                _context.Requests.Add(request);
+                await _context.SaveChangesAsync();
+
+                response.Data = _mapper.Map<GetRequestDto>(request);
             }
             // Adding request to History database 
             PreviousRequest previousRequest = new PreviousRequest
@@ -258,6 +262,34 @@ public class RequestService : IRequestService
                 {
                     previousRequest.Status = RequestAcceptMode.Accepted;
                     _context.BankAccounts.Remove(bankAccount);
+                    _context.Requests.Remove(request);
+                    await _context.SaveChangesAsync();
+                    return response;
+                }
+            }
+            else if (request.Type == RequestType.AddMoney) // Delete Account handler
+            {
+                BankAccount? bankAccount =
+                    await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == request.AccountId);
+                response.Data = request.Id;
+                if (bankAccount is null)
+                {
+                    response.Success = false;
+                    response.StatusCode = 404;
+                    response.Message = "Not found";
+                    
+                    previousRequest.Message = "Account doesnt exist";
+                    previousRequest.Status = RequestAcceptMode.Deleted;
+                    _context.Requests.Remove(request);
+                    await _context.SaveChangesAsync();
+                    return response;
+                }
+                else
+                {
+                    previousRequest.Status = RequestAcceptMode.Accepted;
+
+                    bankAccount.Balance += request.AmountBalance;
+                    
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
                     return response;
