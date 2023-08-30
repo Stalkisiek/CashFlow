@@ -5,7 +5,7 @@ namespace CashFlow.Services.BankAccountServices;
 
 public interface IBankAccountService
 {
-    Task<ServiceResponse<List<GetBankAccountDto>>> GetAllBankAccounts();
+    Task<ServiceResponse<List<GetBankAccountDto>>> GetAll();
     Task<ServiceResponse<List<GetBankAccountDto>>> GetAllWithinUser();
     Task<ServiceResponse<GetBankAccountDto>> GetBankAccountById(int id);
     Task<ServiceResponse<GetBankAccountDto>> CreateBankAccount(AddBankAccountDto addBankAccountDto);

@@ -3,6 +3,7 @@ using CashFlow.Models;
 using CashFlow.Services.BankAccountServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CashFlow.Controllers;
 
@@ -18,7 +19,7 @@ public class BankAccountController : ControllerBase
         _bankAccountService = bankAccountService;
     }
     
-    [HttpPut]
+    [HttpPost]
     public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> CreateBankAccount(
         AddBankAccountDto addBankAccountDto)
     {
@@ -37,7 +38,7 @@ public class BankAccountController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> GetAll()
     {
-        var response = await _bankAccountService.GetAllBankAccounts();
+        var response = await _bankAccountService.GetAll();
         return StatusCode(response.StatusCode, response);
     }
 
@@ -46,6 +47,22 @@ public class BankAccountController : ControllerBase
     public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> GetAllWithinUser()
     {
         var response = await _bankAccountService.GetAllWithinUser();
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> UpdateBankAccount(
+        UpdateBankAccountDto updateBankAccountDto)
+    {
+        var response = await _bankAccountService.UpdateBankAccount(updateBankAccountDto);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpDelete]
+    [Route("{id:int}")]
+    public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> Delete(int id)
+    {
+        var response = await _bankAccountService.DeleteBankAccount(id);
         return StatusCode(response.StatusCode, response);
     }
 }

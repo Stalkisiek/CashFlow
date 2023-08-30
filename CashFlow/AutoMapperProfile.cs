@@ -20,5 +20,6 @@ public class AutoMapperProfile : Profile
         CreateMap<PreviousRequest, GetPreviousRequestDto>();
         CreateMap<AddBankAccountDto, BankAccount>();
         CreateMap<BankAccount, GetBankAccountDto>();
+        CreateMap<UpdateBankAccountDto, BankAccount>();
     }
 }

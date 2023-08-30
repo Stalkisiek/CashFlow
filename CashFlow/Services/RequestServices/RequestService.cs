@@ -121,6 +121,14 @@ public class RequestService : IRequestService
 
                 response.Data = _mapper.Map<GetRequestDto>(request);
             }
+            else if(addRequestDto.Type == RequestType.DeleteAccount)
+            {
+                request.UserId = GetUserId();
+                _context.Requests.Add(request);
+                await _context.SaveChangesAsync();
+
+                response.Data = _mapper.Map<GetRequestDto>(request);
+            }
             else
             {
                 
@@ -168,19 +176,24 @@ public class RequestService : IRequestService
                 response.Message = "Request not found";
                 return response;
             }
-            PreviousRequest previousRequest = new PreviousRequest();
+
+            PreviousRequest? previousRequest =
+                await _context.PreviousRequests.FirstOrDefaultAsync(p => p.RequestId == request.Id);
+            if (previousRequest is null)
+            {
+                response.Success = false;
+                response.StatusCode = 404;
+                response.Message = "Request history not found";
+                return response;
+            }
+            
             if (fulfillRequestDto.Accepted == false)
             {
                 response.Success = false;
                 response.StatusCode = 200;
                 response.Message = "Rejected";
-
-
+                
                 previousRequest.Status = RequestAcceptMode.Rejected;
-                previousRequest.RequestId = request.Id;
-                previousRequest.UserId = request.UserId;
-                previousRequest.Type = request.Type;
-                _context.PreviousRequests.Add(previousRequest);
                 _context.Requests.Remove(request);
                 await _context.SaveChangesAsync();
         
@@ -190,37 +203,55 @@ public class RequestService : IRequestService
             if (request.Type == RequestType.DeleteUser) // DeleteUser handler
             {
                 User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
+                response.Data = request.Id;
                 if (user is null) // Deletes request when user is no longer in DB
                 {
                     response.Success = false;
                     response.StatusCode = 404;
                     response.Message = "Not found";
                     
-                    response.Data = request.Id;
                     previousRequest.Status = RequestAcceptMode.Deleted;
-                    previousRequest.RequestId = request.Id;
-                    previousRequest.UserId = request.UserId;
-                    previousRequest.Type = request.Type;
-                    _context.PreviousRequests.Add(previousRequest);
-                    await _context.SaveChangesAsync();
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
                     
                     return response;
                 }
-
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
-                return response;
+                else
+                {
+                    previousRequest.Status = RequestAcceptMode.Accepted;
+                    _context.Users.Remove(user);
+                    _context.Requests.Remove(request);
+                    await _context.SaveChangesAsync();
+                    return response;
+                }
+                
             } 
-
+            else if (request.Type == RequestType.DeleteAccount) // Delete Account handler
+            {
+                BankAccount? bankAccount =
+                    await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == request.AccountId);
+                response.Data = request.Id;
+                if (bankAccount is null)
+                {
+                    response.Success = false;
+                    response.StatusCode = 404;
+                    response.Message = "Not found";
+                    
+                    previousRequest.Status = RequestAcceptMode.Deleted;
+                    _context.Requests.Remove(request);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    previousRequest.Status = RequestAcceptMode.Accepted;
+                    _context.BankAccounts.Remove(bankAccount);
+                    _context.Requests.Remove(request);
+                    await _context.SaveChangesAsync();
+                    return response;
+                }
+            }
             response.Data = request.Id;
             previousRequest.Status = RequestAcceptMode.Accepted;
-            previousRequest.RequestId = request.Id;
-            previousRequest.UserId = request.UserId;
-            previousRequest.Type = request.Type;
-            _context.PreviousRequests.Add(previousRequest);
-            await _context.SaveChangesAsync();
             _context.Requests.Remove(request);
             await _context.SaveChangesAsync();
         }

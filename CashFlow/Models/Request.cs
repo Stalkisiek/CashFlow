@@ -5,7 +5,8 @@ namespace CashFlow.Models;
 public class Request
 {
     public int Id { get; set; }
-    public int UserId {get;set;} 
+    public int UserId {get;set;}
+    public int AccountId { get; set; }
     [Column(TypeName = "nvarchar(50)")]
     public RequestType Type { get; set; }
     //Normal cash
