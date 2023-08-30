@@ -5,6 +5,7 @@ using CashFlow.Dtos.BankAccount;
 using CashFlow.Dtos.Request;
 using CashFlow.Models;
 using CashFlow.Services.RequestServices;
+using CashFlow.Services.UpdateServices;
 
 namespace CashFlow.Services.BankAccountServices;
 
@@ -14,13 +15,16 @@ public class BankAccountService : IBankAccountService
     private readonly DataContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IRequestService _requestService;
+    private readonly IUpdateService _updateService;
 
-    public BankAccountService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor, IRequestService requestService)
+    public BankAccountService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor, 
+        IRequestService requestService, IUpdateService updateService)
     {
         _mapper = mapper;
         _context = context;
         _httpContextAccessor = httpContextAccessor;
         _requestService = requestService;
+        _updateService = updateService;
     }
     
     // Helper method to extract the current user's ID from the claims
@@ -294,6 +298,7 @@ public class BankAccountService : IBankAccountService
                     response.Message = tempResponse.Message != string.Empty ? tempResponse.Message : "Request created";
                     response.Success = tempResponse.Success;
                     response.StatusCode = tempResponse.StatusCode;
+                    await _updateService.UpdateAll();
                 }
             }
         }

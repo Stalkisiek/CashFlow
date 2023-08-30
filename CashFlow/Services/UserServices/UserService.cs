@@ -8,6 +8,7 @@ using CashFlow.Dtos.User;
 using CashFlow.Models;
 using CashFlow.Services.AuthServices;
 using CashFlow.Services.RequestServices;
+using CashFlow.Services.UpdateServices;
 
 namespace CashFlow.Services.UserServices;
 
@@ -19,16 +20,18 @@ public class UserService : IUserService
     private readonly IHttpContextAccessor _httpContextAccessor; // Access to HTTP context
     private readonly IAuthRepository _authRepository;
     private readonly IRequestService _requestService;
+    private readonly IUpdateService _updateService;
 
     // Constructor to initialize dependencies through dependency injection
     public UserService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, 
-        IAuthRepository authRepository, IRequestService requestService)
+        IAuthRepository authRepository, IRequestService requestService, IUpdateService updateService)
     {
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
         _authRepository = authRepository;
         _requestService = requestService;
+        _updateService = updateService;
     }
 
     // Helper method to extract the current user's ID from the claims
@@ -274,6 +277,7 @@ public class UserService : IUserService
                 }
 
                 await _context.SaveChangesAsync();
+                await _updateService.UpdateAll();
             }
             else
             {
