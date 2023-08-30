@@ -8,10 +8,11 @@
 - [DTOs (Data Transfer Objects)](#dtos-data-transfer-objects)
 - [DataContext](#datacontext)
 - [Services](#services)
+- - [UserService](#userservice)
 - - [AuthService](#authservice)
 - - [RequestService](#requestservice)
 - - [BankAccountService](#bankaccountservice)
-- - [UserService](#userservice)
+
 
 ## Introduction
 
@@ -373,7 +374,7 @@ For user:
 - Output: None
 - AdditionalInfo: Creates a request using CreateRequest
 
-### AuthServices
+### AuthService
 
 **BasicInfo:**
 Methods declared in IAuthRepository and implemented in AuthRepository. Called in AuthController. The controller uses ActionResult and returns StatusCode(response.StatusCode, response). SyntaxChecker is also used internally.
@@ -436,7 +437,7 @@ Methods declared in IAuthRepository and implemented in AuthRepository. Called in
 - Output: JSON token
 - AdditionalInfo: Description not needed
 
-### RequestServices
+### RequestService
 
 **BasicInfo:**
 Methods declared in IRequestService and implemented in RequestService. Called in RequestController. The controller uses ActionResult and returns StatusCode(response.StatusCode, response). The application uses requests to assign tasks from non-privileged accounts to be reviewed and executed/rejected by users with appropriate authorization levels.
@@ -495,7 +496,7 @@ Methods declared in IRequestService and implemented in RequestService. Called in
      - Output: ID of the executed request
      - AdditionalInfo: Adds to balance and credit
 
-### BankAccountServices
+### BankAccountService
 
 Methods declared in IBankAccountService and implemented in BankAccountService. Called in BankAccountController. The controller uses ActionResult and returns StatusCode(response.StatusCode, response).
 
