@@ -1,7 +1,9 @@
 global using Microsoft.AspNetCore.Http;
 
 using CashFlow.Data;
+using CashFlow.Models;
 using CashFlow.Services.AuthServices;
+using CashFlow.Services.BankAccountServices;
 using CashFlow.Services.RequestServices;
 using CashFlow.Services.UserServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -48,6 +50,7 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRequestService, RequestService>();
+builder.Services.AddScoped<IBankAccountService, BankAccountService>();
 
 var app = builder.Build();
 

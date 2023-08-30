@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CashFlow.Dtos.Account;
 using CashFlow.Dtos.Authorization;
+using CashFlow.Dtos.BankAccount;
 using CashFlow.Dtos.Request;
 using CashFlow.Models;
 
@@ -17,5 +18,7 @@ public class AutoMapperProfile : Profile
         CreateMap<AddRequestDto, Request>();
         CreateMap<Request, GetPreviousRequestDto>();
         CreateMap<PreviousRequest, GetPreviousRequestDto>();
+        CreateMap<AddBankAccountDto, BankAccount>();
+        CreateMap<BankAccount, GetBankAccountDto>();
     }
 }
