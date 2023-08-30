@@ -25,4 +25,12 @@ public class BankAccountController : ControllerBase
         var response = await _bankAccountService.CreateBankAccount(addBankAccountDto);
         return StatusCode(response.StatusCode, response);
     }
+
+    [HttpGet]
+    [Route("{id:int}")]
+    public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> GetById(int id)
+    {
+        var response = await _bankAccountService.GetBankAccountById(id);
+        return StatusCode(response.StatusCode, response);
+    }
 }

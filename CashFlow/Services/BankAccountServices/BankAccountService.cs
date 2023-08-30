@@ -48,6 +48,7 @@ public class BankAccountService : IBankAccountService
         try
         {
             var bankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == id);
+            //Check if bank account exists
             if (bankAccount is null)
             {
                 response.Success = false;
@@ -55,7 +56,17 @@ public class BankAccountService : IBankAccountService
                 response.Message = "Not found";
                 return response;
             }
-            
+
+            // Check if its user bank account/or user have high permission level
+            if (bankAccount.UserId != GetUserId() && !(await GetUserAuthLvl() > (int)AuthorizationLevel.User))
+            {
+                response.Success = false;
+                response.StatusCode = 401;
+                response.Message = "Unauthorized";
+                return response;
+            }
+
+            response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
         }
         catch (Exception ex)
         {
@@ -74,7 +85,6 @@ public class BankAccountService : IBankAccountService
         {
             var bankAccount = _mapper.Map<BankAccount>(addBankAccountDto);
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
-            
             // Check if logged in user exist in DB
             if (user is null)
             {

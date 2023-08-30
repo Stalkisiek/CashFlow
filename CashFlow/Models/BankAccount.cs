@@ -17,7 +17,7 @@ public class BankAccount : Entity
     public BankAccount()
     {
         CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
+        UpdatedAt = CreatedAt;
     }
     public int UserId { get; set; }
     public User? User { get; set; }
