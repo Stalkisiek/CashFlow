@@ -243,6 +243,7 @@ public class RequestService : IRequestService
                 else
                 {
                     previousRequest.Status = RequestAcceptMode.Accepted;
+                    response.Message = "Accepted";
                     _context.Users.Remove(user);
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
@@ -272,6 +273,7 @@ public class RequestService : IRequestService
                 else
                 {
                     previousRequest.Status = RequestAcceptMode.Accepted;
+                    response.Message = "Accepted";
                     _context.BankAccounts.Remove(bankAccount);
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
@@ -300,7 +302,8 @@ public class RequestService : IRequestService
                 else
                 {
                     previousRequest.Status = RequestAcceptMode.Accepted;
-
+                    response.Message = "Accepted";
+                    
                     bankAccount.Balance += request.AmountBalance;
                     
                     _context.Requests.Remove(request);
@@ -330,6 +333,7 @@ public class RequestService : IRequestService
                 else
                 {
                     previousRequest.Status = RequestAcceptMode.Accepted;
+                    response.Message = "Accepted";
 
                     bankAccount.CreditBalance += request.AmountCredit;
                     bankAccount.Balance += request.AmountCredit;
@@ -342,6 +346,7 @@ public class RequestService : IRequestService
             }
             response.Data = request.Id;
             previousRequest.Status = RequestAcceptMode.Accepted;
+            response.Message = "Accepted";
             _context.Requests.Remove(request);
             await _context.SaveChangesAsync();
             await _updateService.UpdateAll();

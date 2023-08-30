@@ -4,6 +4,7 @@ using AutoMapper;
 using CashFlow.Data;
 using CashFlow.Dtos.Authorization;
 using CashFlow.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CashFlow.Services.AuthServices;
@@ -84,6 +85,13 @@ public class AuthRepository : IAuthRepository
                 {
                     CreatePasswordHash(registerUserDto.Password, out var passwordHash, out var passwordSalt);
                     var user = _mapper.Map<User>(registerUserDto);
+                    if (SyntaxChecker.IsValidName(user.Name) == false || SyntaxChecker.IsValidName(user.Surname) == false)
+                    {
+                        response.Success = false;
+                        response.Message = "Invalid name/surname";
+                        response.StatusCode = 400;
+                        return response;
+                    }
                     user.PasswordHash = passwordHash;
                     user.PasswordSalt = passwordSalt;
                     user.AuthorizationLevel = AuthorizationLevel.User;
@@ -101,6 +109,7 @@ public class AuthRepository : IAuthRepository
                     response.Success = false;
                     response.Message = "Invalid email address";
                     response.StatusCode = 400;
+                    return response;
                 }
             }
             else

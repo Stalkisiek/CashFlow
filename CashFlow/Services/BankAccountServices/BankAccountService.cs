@@ -242,6 +242,7 @@ public class BankAccountService : IBankAccountService
             bankAccount.UpdatedAt = DateTime.Now;
             //_context.BankAccounts.Update(bankAccount);
             await _context.SaveChangesAsync();
+            await _updateService.UpdateAll();
             response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
         }
         catch (Exception e)
