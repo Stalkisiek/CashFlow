@@ -63,15 +63,24 @@ public class RequestService : IRequestService
         return response;
     }
 
-    public async Task<ServiceResponse<List<GetPreviousRequestDto>>> GetAllWithinUser(int id)
+    public async Task<ServiceResponse<List<GetPreviousRequestDto>>> GetAllWithinUser(int id, bool showOnlyPending) // if show all include accepted
     {
         var response = new ServiceResponse<List<GetPreviousRequestDto>>();
         try
         {
             if (await GetUserAuthLvl() > (int)AuthorizationLevel.User || GetUserId() == id)
             {
-                response.Data = await _context.PreviousRequests.Where(r => r.UserId == id)
-                    .Select(r => _mapper.Map<GetPreviousRequestDto>(r)).ToListAsync();
+                if (showOnlyPending)
+                {
+                    response.Data = await _context.PreviousRequests.Where(r => r.UserId == id)
+                        .Where(r => r.Status == RequestAcceptMode.Pending)
+                        .Select(r => _mapper.Map<GetPreviousRequestDto>(r)).ToListAsync();
+                }
+                else
+                {
+                    response.Data = await _context.PreviousRequests.Where(r => r.UserId == id)
+                        .Select(r => _mapper.Map<GetPreviousRequestDto>(r)).ToListAsync();
+                }
             }
             else
             {
@@ -186,7 +195,8 @@ public class RequestService : IRequestService
                 response.Message = "Request history not found";
                 return response;
             }
-            
+
+            previousRequest.Message = fulfillRequestDto.Message;
             if (fulfillRequestDto.Accepted == false)
             {
                 response.Success = false;
@@ -209,7 +219,8 @@ public class RequestService : IRequestService
                     response.Success = false;
                     response.StatusCode = 404;
                     response.Message = "Not found";
-                    
+
+                    previousRequest.Message = "User was already deleted";
                     previousRequest.Status = RequestAcceptMode.Deleted;
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
@@ -237,6 +248,7 @@ public class RequestService : IRequestService
                     response.StatusCode = 404;
                     response.Message = "Not found";
                     
+                    previousRequest.Message = "Account was already deleted";
                     previousRequest.Status = RequestAcceptMode.Deleted;
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();

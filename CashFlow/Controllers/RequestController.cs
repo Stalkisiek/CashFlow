@@ -26,9 +26,9 @@ public class RequestController : ControllerBase
     }
     
     [HttpGet("{userId:int}")]
-    public async Task<ActionResult<ServiceResponse<List<GetRequestDto>>>> GetAllByUserId(int userId)
+    public async Task<ActionResult<ServiceResponse<List<GetRequestDto>>>> GetAllByUserId(int userId, bool showOnlyPending)
     {
-        var response = await _requestService.GetAllWithinUser(userId);
+        var response = await _requestService.GetAllWithinUser(userId, showOnlyPending);
         return StatusCode(response.StatusCode, response);
     }
     

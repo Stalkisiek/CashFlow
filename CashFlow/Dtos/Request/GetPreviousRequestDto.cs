@@ -9,4 +9,5 @@ public class GetPreviousRequestDto
     public int RequestId { get; set; }
     public RequestType Type { get; set; }
     public RequestAcceptMode Status { get; set; }
+    public string Message { get; set; } = string.Empty;
 }
