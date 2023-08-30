@@ -252,6 +252,7 @@ public class RequestService : IRequestService
                     previousRequest.Status = RequestAcceptMode.Deleted;
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    return response;
                 }
                 else
                 {
