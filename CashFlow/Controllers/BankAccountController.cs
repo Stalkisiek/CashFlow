@@ -40,5 +40,12 @@ public class BankAccountController : ControllerBase
         var response = await _bankAccountService.GetAllBankAccounts();
         return StatusCode(response.StatusCode, response);
     }
-    
+
+    [HttpGet]
+    [Route("currentUser")]
+    public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> GetAllWithinUser()
+    {
+        var response = await _bankAccountService.GetAllWithinUser();
+        return StatusCode(response.StatusCode, response);
+    }
 }

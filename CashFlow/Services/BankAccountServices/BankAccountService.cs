@@ -57,9 +57,31 @@ public class BankAccountService : IBankAccountService
         return response;
     }
 
-    public Task<ServiceResponse<List<GetBankAccountDto>>> GetAllWithinUser()
+    public async Task<ServiceResponse<List<GetBankAccountDto>>> GetAllWithinUser()
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<List<GetBankAccountDto>>();
+        try
+        {
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+            //Check if user is in Db
+            if (user is null)
+            {
+                response.Success = false;
+                response.Message = "User not found";
+                response.StatusCode = 404;
+                return response;
+            }
+
+            response.Data = await _context.BankAccounts.Where(b => b.UserId == GetUserId()).Select(b => _mapper.Map<GetBankAccountDto>(b)).ToListAsync();
+        }
+        catch (Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+            response.StatusCode = 500;
+        }
+
+        return response;
     }
 
     public async Task<ServiceResponse<GetBankAccountDto>> GetBankAccountById(int id)
