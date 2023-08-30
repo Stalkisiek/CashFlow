@@ -414,13 +414,6 @@ public class BankAccountService : IBankAccountService
             }
             else
             {
-                if (bankAccount.Balance - amount < 0)
-                {
-                    response.Success = false;
-                    response.Message = "Not sufficient funds";
-                    response.StatusCode = 400;
-                    return response;
-                }
                 if (bankAccount.UserId != GetUserId())
                 {
                     response.Success = false;
@@ -428,6 +421,14 @@ public class BankAccountService : IBankAccountService
                     response.Message = "Unauthorized";
                     return response;
                 }
+                if (bankAccount.Balance - amount < 0)
+                {
+                    response.Success = false;
+                    response.Message = "Not sufficient funds";
+                    response.StatusCode = 400;
+                    return response;
+                }
+                
                 
                 bankAccount.Balance -= amount;
                 await _context.SaveChangesAsync();

@@ -3,6 +3,7 @@ using AutoMapper;
 using CashFlow.Data;
 using CashFlow.Dtos.Request;
 using CashFlow.Models;
+using CashFlow.Services.UpdateServices;
 
 namespace CashFlow.Services.RequestServices;
 
@@ -12,14 +13,17 @@ public class RequestService : IRequestService
     private readonly DataContext _context; // Database context
     private readonly IMapper _mapper; // AutoMapper for object mapping
     private readonly IHttpContextAccessor _httpContextAccessor; // Access to HTTP context
+    private readonly IUpdateService _updateService;
 
     // Constructor to initialize dependencies through dependency injection
-    public RequestService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    public RequestService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IUpdateService updateService)
     {
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
+        _updateService = updateService;
     }
+    
 
     // Helper method to extract the current user's ID from the claims
     private int GetUserId()
@@ -215,7 +219,7 @@ public class RequestService : IRequestService
                 previousRequest.Status = RequestAcceptMode.Rejected;
                 _context.Requests.Remove(request);
                 await _context.SaveChangesAsync();
-        
+                await _updateService.UpdateAll();
                 return response;
             }
 
@@ -233,7 +237,7 @@ public class RequestService : IRequestService
                     previousRequest.Status = RequestAcceptMode.Deleted;
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
-                    
+                    await _updateService.UpdateAll();
                     return response;
                 }
                 else
@@ -242,6 +246,7 @@ public class RequestService : IRequestService
                     _context.Users.Remove(user);
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    await _updateService.UpdateAll();
                     return response;
                 }
                 
@@ -261,6 +266,7 @@ public class RequestService : IRequestService
                     previousRequest.Status = RequestAcceptMode.Deleted;
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    await _updateService.UpdateAll();
                     return response;
                 }
                 else
@@ -269,6 +275,7 @@ public class RequestService : IRequestService
                     _context.BankAccounts.Remove(bankAccount);
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    await _updateService.UpdateAll();
                     return response;
                 }
             }
@@ -287,6 +294,7 @@ public class RequestService : IRequestService
                     previousRequest.Status = RequestAcceptMode.Deleted;
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    await _updateService.UpdateAll();
                     return response;
                 }
                 else
@@ -297,6 +305,7 @@ public class RequestService : IRequestService
                     
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    await _updateService.UpdateAll();
                     return response;
                 }
             }
@@ -315,6 +324,7 @@ public class RequestService : IRequestService
                     previousRequest.Status = RequestAcceptMode.Deleted;
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    await _updateService.UpdateAll();
                     return response;
                 }
                 else
@@ -326,6 +336,7 @@ public class RequestService : IRequestService
                     
                     _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
+                    await _updateService.UpdateAll();
                     return response;
                 }
             }
@@ -333,6 +344,7 @@ public class RequestService : IRequestService
             previousRequest.Status = RequestAcceptMode.Accepted;
             _context.Requests.Remove(request);
             await _context.SaveChangesAsync();
+            await _updateService.UpdateAll();
         }
         catch (Exception e)
         {
