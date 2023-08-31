@@ -42,7 +42,7 @@ public class BankAccountController : ControllerBase
     }
 
     [HttpGet]
-    [Route("currentUser")]
+    [Route("self")]
     public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> GetAllWithinUser()
     {
         var response = await _bankAccountService.GetAllWithinUser();
@@ -58,7 +58,7 @@ public class BankAccountController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id:int}/addBalance")]
+    [Route("{id:int}/balance/add")]
     public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> AddBalance(int id, double amount)
     {
         var response = await _bankAccountService.AddBalance(id, amount);
@@ -66,7 +66,7 @@ public class BankAccountController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id:int}/subtractBalance")]
+    [Route("{id:int}/balance/subtract")]
     public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> SubtractBalance(int id, double amount)
     {
         var response = await _bankAccountService.SubtractBalance(id, amount);
@@ -82,7 +82,7 @@ public class BankAccountController : ControllerBase
     }
     
     [HttpPut]
-    [Route("{id:int}/credit")]
+    [Route("{id:int}/credit/add")]
     public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> AddCredit(int id, double amount)
     {
         var response = await _bankAccountService.AddCredit(id, amount);
@@ -90,7 +90,7 @@ public class BankAccountController : ControllerBase
     }
     
     [HttpPut]
-    [Route("{id:int}/paycredit")]
+    [Route("{id:int}/credit/subtract")]
     public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> PayCredit(int id, double amount)
     {
         var response = await _bankAccountService.PayCredit(id, amount);
