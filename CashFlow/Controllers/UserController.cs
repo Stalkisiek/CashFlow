@@ -47,7 +47,7 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
-    [HttpGet("self")]
+    [HttpGet("current")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetCurrentUser()
     {
         var response = await _userService.GetCurrentUser();
@@ -75,7 +75,7 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     
-    [HttpPut("auth")]
+    [HttpPut("authLvl")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> UpdateAuthLvl(UpdateUserAuthorizationLevelDto updateUserAuthLvlDto)
     {
         var response = await _userService.UpdateUserAuthorizationLevel(updateUserAuthLvlDto);
@@ -90,7 +90,7 @@ public class UserController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpDelete("self")]
+    [HttpDelete]
     public async Task<ActionResult<ServiceResponse<string>>> DeleteCurrentUser()
     {
         var response = await _userService.DeleteCurrentUser();

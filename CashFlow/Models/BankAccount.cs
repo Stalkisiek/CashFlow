@@ -11,7 +11,6 @@ public class BankAccount : Entity
     public string Name { get; set; } = string.Empty;// Name should be created as user surname+bankaccountid+type
     [Column(TypeName = "decimal(18, 2)")]
     public double Balance { get; set; }
-    [Column(TypeName = "decimal(18, 2)")]
     public double CreditBalance { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
