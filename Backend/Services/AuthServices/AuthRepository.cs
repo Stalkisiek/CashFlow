@@ -1,9 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using AutoMapper;
+using Azure;
 using CashFlow.Data;
 using CashFlow.Dtos.Authorization;
 using CashFlow.Models;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -56,8 +58,23 @@ public class AuthRepository : IAuthRepository
             }
             else
             {
+                var token = CreateToken(user);
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.Now.AddDays(1)
+                };
+
+                var cookieOptionsJS = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(1)
+                };
+                
+                _httpContextAccessor.HttpContext.Response.Cookies.Append("JWTToken", token, cookieOptions);
+                _httpContextAccessor.HttpContext.Response.Cookies.Append("is-logged","true",cookieOptionsJS);
                 // Create and return a JWT token upon successful login
-                response.Data = CreateToken(user);
+                response.Data = token;
             }
         }
         catch (Exception e)

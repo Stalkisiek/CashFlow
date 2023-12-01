@@ -21,7 +21,7 @@ public class AuthController : ControllerBase
     
     [HttpPost]
     [Route("Register")]
-    public async Task<ActionResult<ServiceResponse<int>>> Register(RegisterUserDto registerUserDto)
+    public async Task<ActionResult<ServiceResponse<int>>> Register([FromBody] RegisterUserDto registerUserDto)
     {
         var response = await _authRepository.Register(registerUserDto);
         return StatusCode(response.StatusCode, response);
