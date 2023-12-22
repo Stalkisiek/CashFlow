@@ -1,18 +1,16 @@
-﻿using CashFlow.Dtos.Account;
-using CashFlow.Dtos.Authorization;
+﻿using CashFlow.Dtos.Authorization;
 using CashFlow.Models;
 using CashFlow.Services.AuthServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CashFlow.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthRepository _authRepository;
-
+    
     public AuthController(IAuthRepository authRepository)
     {
         _authRepository = authRepository;

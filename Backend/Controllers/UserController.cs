@@ -11,7 +11,7 @@ namespace CashFlow.Controllers;
 
 [Authorize] // Moved Authorized attribute to controller level
 [ApiController]
-[Route("[controller]s")]
+[Route("api/[controller]s")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;

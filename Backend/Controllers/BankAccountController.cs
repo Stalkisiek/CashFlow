@@ -8,7 +8,7 @@ namespace CashFlow.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]s")]
+[Route("api/[controller]s")]
 public class BankAccountController : ControllerBase
 {
     private readonly IBankAccountService _bankAccountService;

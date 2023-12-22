@@ -1,5 +1,6 @@
 global using Microsoft.AspNetCore.Http;
 using CashFlow.Data;
+using CashFlow.Models;
 using CashFlow.Services.AuthServices;
 using CashFlow.Services.BankAccountServices;
 using CashFlow.Services.RequestServices;
