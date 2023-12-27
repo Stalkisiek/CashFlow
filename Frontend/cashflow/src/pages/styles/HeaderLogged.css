@@ -1,0 +1,18 @@
+#header{
+    height: 80px;
+    width: 100%;
+    /*margin: 2em;*/
+    /*border: 0.1rem solid black;*/
+    box-sizing: border-box;
+    background-color: grey;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#header img{
+    height: 90%;
+    border-radius: 15px;
+    margin: 0.5rem;
+}
