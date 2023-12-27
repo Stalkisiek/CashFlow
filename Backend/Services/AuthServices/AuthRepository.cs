@@ -72,7 +72,6 @@ public class AuthRepository : IAuthRepository
                 };
                 
                 _httpContextAccessor.HttpContext.Response.Cookies.Append("JWTToken", token, cookieOptions);
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("is-logged","true",cookieOptionsJS);
                 // Create and return a JWT token upon successful login
                 response.Data = token;
             }

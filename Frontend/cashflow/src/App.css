@@ -1,0 +1,5 @@
+@font-face {
+    font-family: "Light";   /*Can be any text*/
+    src: local("ZilapMonograma-L2J4"),
+    url("./fonts/ZilapMonograma-L2J4.ttf") format("truetype");
+}

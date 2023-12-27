@@ -1,18 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './reset.css'
-import {LoginPage} from "./pages/LoginPage";
+import './fonts/ZilapMonograma-L2J4.ttf'
 import {BrowserRouter} from "react-router-dom";
 import {Routing} from "./pages/Routing";
 
 function App() {
+    const elementStyle = {
+        fontFamily: '"Roboto", sans-serif', // Replace 'Arial' with your desired font
+        // fontFamily: "Light" //"Medium"
+    };
   return (
-    <>
-        <BrowserRouter>
-            <Routing/>
-        </BrowserRouter>
-    </>
+      <div style={elementStyle}>
+          <BrowserRouter>
+              <Routing/>
+          </BrowserRouter>
+      </div>
+
   );
 }
 

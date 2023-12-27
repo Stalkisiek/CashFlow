@@ -1,0 +1,101 @@
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: #c7c7c7;
+    width: 300px;
+    height: 400px;
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(201, 1, 130, 0.25);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s;
+}
+
+form:hover{
+    box-shadow: 8px 8px 37px 18px rgb(129, 20, 178);
+}
+
+form label{
+    display: flex;
+    user-select: none;
+    /*justify-content: center;*/
+}
+
+img{
+    height: 30%;
+    margin-bottom: 20px;
+}
+
+form input{
+    border-radius: 5px;
+    height: 20px;
+    background-color: rgba(255, 0, 0, 0);
+    border: 2px solid #fc6ec9;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 1s, transform 1s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(5px); }
+}
+
+input:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+    animation: shake 0.55s;
+}
+
+::placeholder{
+    color: rgba(0, 0, 0, 0.75);
+}
+
+#email label{
+    margin-top:0px;
+}
+
+#password label{
+    margin-top: 15px;
+}
+
+#LoginButtonContainer button {
+    margin-top: 40px;
+    border-radius: 20px;
+    width: 150px;
+    height: 60px;
+    background: linear-gradient(45deg, #fc00ff, #0059de);
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s, box-shadow 0.5s;
+
+    user-select: none;
+}
+
+#LoginButtonContainer button:hover {
+    animation-name: gradient-fade; /* Use the animation you defined */
+    animation-duration: 1s;
+    transform: scale(1.05);
+}
+
+#LoginButtonContainer button:active {
+    box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
+}

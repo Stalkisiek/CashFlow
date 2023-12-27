@@ -1,0 +1,8 @@
+body{
+   font-family: 'Roboto', sans-serif;;
+}
+
+::selection{
+   color: #34032c;
+   background: #f4b0ff;
+}

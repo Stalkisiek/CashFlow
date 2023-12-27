@@ -4,7 +4,11 @@
     height: 100vh;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(45, 16, 64, 0.9);
+    background-image: url("../../pictures/background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    /*background: linear-gradient(172deg, #E1217B 0%, #15043A 22%, #670558 23%, #343A80 39%, #0A0107 40%, #230E5C 41%, #0092DB 59%, #343A80 60%, #000B32 61%, #6668AA 62%, #3D4A75 77%, #2A195F 78%, #A20E69 86%, #000000 87%, #27034B 100%);*/
 }
 
 #main a{
