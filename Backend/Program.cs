@@ -7,12 +7,15 @@ using CashFlow.Services.RequestServices;
 using CashFlow.Services.UpdateServices;
 using CashFlow.Services.UserServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+var services = builder.Services;
 
 // Add services to the container.
 
@@ -46,12 +49,22 @@ builder.Services.AddSwaggerGen(c =>
     
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+services.AddCors(options =>
+{
+    options.AddPolicy("ReactAppPolicy",
+        builder => builder
+            .WithOrigins("http://localhost:3000")  // Allow requests from your React app
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+    );
+});
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRequestService, RequestService>();
 builder.Services.AddScoped<IBankAccountService, BankAccountService>();
 builder.Services.AddScoped<IUpdateService, UpdateService>();
+
 
 var app = builder.Build();
 
@@ -63,6 +76,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("ReactAppPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

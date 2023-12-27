@@ -3,11 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 import './reset.css'
 import {LoginPage} from "./pages/LoginPage";
+import {BrowserRouter} from "react-router-dom";
+import {Routing} from "./pages/Routing";
 
 function App() {
   return (
     <>
-      <LoginPage/>
+        <BrowserRouter>
+            <Routing/>
+        </BrowserRouter>
     </>
   );
 }
