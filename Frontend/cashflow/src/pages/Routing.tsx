@@ -1,9 +1,10 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import {Center} from "./layout/Center";
 import {LoginPage} from "./LoginPage";
 import {Navigate, useRoutes} from "react-router-dom";
 import {MainPage} from "./MainPage";
 import useAccountAuthorization from "../hooks/useAccountAuthorization";
+import {RegisterPage} from './RegisterPage';
 import {Main} from "./layout/Main";
 
 const publicRoutes = [
@@ -14,6 +15,10 @@ const publicRoutes = [
             {
                 path: '/login',
                 element: <LoginPage/>
+            },
+            {
+              path: '/register',
+                element: <RegisterPage/>
             },
             {
                 path: "*",
@@ -30,7 +35,7 @@ const publicRoutes = [
 const privateRoutes = [
     {
         path: '/',
-        element: <Center/>,
+        element: <Main/>,
         children: [
             {
                 path: '/home',

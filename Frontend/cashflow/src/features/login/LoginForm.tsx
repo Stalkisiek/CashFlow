@@ -4,6 +4,7 @@ import logo from '../../pictures/logoWithoutBackground.png'
 import {useLoginApi} from "./api";
 import './styles.css';
 import '../../fonts/ZilapMonograma-L2J4.ttf'
+import {isButtonElement} from "react-router-dom/dist/dom";
 
 
 interface LoginFormProps{
@@ -30,6 +31,11 @@ export const LoginForm: FC<LoginFormProps> = ({}) => {
         }
     }
 
+    async function handleRegisterClick(e : any){
+        e.preventDefault();
+        await navigate('/register');
+    }
+
     return(
 
             <form onSubmit={handleSubmit}>
@@ -45,8 +51,8 @@ export const LoginForm: FC<LoginFormProps> = ({}) => {
                 <div id='LoginButtonContainer'>
                     <button>Login</button>
                 </div>
+                <button id='RegisterButton' onClick={handleRegisterClick}>Register</button>
             </form>
-
     );
 };
 

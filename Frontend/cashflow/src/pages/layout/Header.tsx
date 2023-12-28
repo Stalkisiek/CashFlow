@@ -1,6 +1,6 @@
 import {FC} from "react";
 import logo from '../../pictures/logo.png'
-import '../styles/HeaderLogged.css'
+import '../styles/headerLogged.css'
 import {useNavigate} from "react-router-dom";
 
 interface HeaderProps{

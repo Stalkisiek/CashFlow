@@ -64,16 +64,14 @@ input:hover{
 }
 
 #email label{
-    margin-top:0px;
+    margin-top:15px;
 }
-
-#password label{
+label{
     margin-top: 15px;
 }
 
-#LoginButtonContainer button {
+#RegisterButtonContainer button {
     margin-top: 40px;
-    margin-bottom: 28px;
     border-radius: 20px;
     width: 150px;
     height: 60px;
@@ -91,17 +89,17 @@ input:hover{
     user-select: none;
 }
 
-#LoginButtonContainer button:hover {
+#RegisterButtonContainer button:hover {
     animation-name: gradient-fade; /* Use the animation you defined */
     animation-duration: 1s;
     transform: scale(1.05);
 }
 
-#LoginButtonContainer button:active {
+#RegisterButtonContainer button:active {
     box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
 }
 
-#RegisterButton{
+#LoginButton{
     position: absolute;
     transform: translateY(200px);
 
@@ -123,10 +121,10 @@ input:hover{
     transition: transform 0.5s, box-shadow 0.5s;
 }
 
-#RegisterButton:hover {
+#LoginButton:hover {
     box-shadow: 0px 0px 30px 10px rgba(250, 169, 255, 0.48);
 }
 
-#RegisterButton:active {
+#LoginButton:active {
     box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
 }
