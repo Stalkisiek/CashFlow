@@ -60,7 +60,6 @@ export const useUserAccountsApi = () => {
             });
 
             const serviceResponse: ServiceResponse<BankAccount[]> = await response.json();
-            console.log(serviceResponse);
 
             if(!serviceResponse.success){
                 console.error(`Error: ${serviceResponse.message}`);

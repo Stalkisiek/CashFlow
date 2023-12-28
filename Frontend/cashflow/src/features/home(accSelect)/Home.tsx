@@ -6,6 +6,7 @@ import {BankAccount} from "../../types/BankAccount";
 import savings from '../../pictures/savings.png';
 import credit from '../../pictures/credit.png';
 import addPhoto from '../../pictures/addAccount.png'
+import {useNavigate} from "react-router-dom";
 
 interface HomeProps {}
 
@@ -14,6 +15,7 @@ export const Home: FC<HomeProps> = ({}) => {
     const { fetchBankData } = useUserAccountsApi();
     const [user, setUser] = useState<User | undefined>();
     const [bankAccounts, setBankAccounts] = useState<BankAccount[] | undefined>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchData()
@@ -45,8 +47,6 @@ export const Home: FC<HomeProps> = ({}) => {
         bankAccounts.push(temp);
     }
 
-    console.log(bankAccounts);
-
     return (
         <div id={'mainContainer'}>
             <header id={'userData'}>
@@ -68,8 +68,23 @@ export const Home: FC<HomeProps> = ({}) => {
                         {/* Render the details of each bank account here */}
                         {/*{account.type === 1 ? '../../pictures/savings.png' : '../../pictures/credit.png'}*/}
                         <p>{account.type === 1 ? 'Savings' : account.type === 0 ? 'Add account' : 'Credit'}</p>
-                        <img src={account.type === 1 ? savings : account.type === 0 ? addPhoto : credit} alt=""/>
-                        {/* Add more details as needed */}
+                        <img
+                            src={account.type === 1 ? savings : account.type === 0 ? addPhoto : credit}
+                            alt=""
+                            onClick={() => {
+                                switch (account.type) {
+                                    case 1:
+                                        navigate('/savings');
+                                        break;
+                                    case 0:
+                                        navigate('/createAccount');
+                                        break;
+                                    default:
+                                        navigate('/credit');
+                                        break;
+                                }
+                            }}
+                        />
                     </li>
                 ))}
             </ul>
