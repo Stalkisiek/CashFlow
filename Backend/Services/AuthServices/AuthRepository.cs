@@ -71,7 +71,7 @@ public class AuthRepository : IAuthRepository
                     Expires = DateTime.Now.AddDays(1)
                 };
                 
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("JWTToken", token, cookieOptions);
+                //_httpContextAccessor.HttpContext.Response.Cookies.Append("JWTToken", token, cookieOptions);
                 // Create and return a JWT token upon successful login
                 response.Data = token;
             }
@@ -88,9 +88,9 @@ public class AuthRepository : IAuthRepository
     }
 
     // Method to register a new user
-    public async Task<ServiceResponse<int>> Register(RegisterUserDto registerUserDto)
+    public async Task<ServiceResponse<string>> Register(RegisterUserDto registerUserDto)
     {
-        var response = new ServiceResponse<int>();
+        var response = new ServiceResponse<string>();
         try
         {
             // Check if user with provided email already exists
@@ -117,7 +117,7 @@ public class AuthRepository : IAuthRepository
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 
-                    response.Data = user.Id; // Newly created user's ID
+                    response.Data = CreateToken(user); // Newly created user's JWT
                 }
                 else
                 {

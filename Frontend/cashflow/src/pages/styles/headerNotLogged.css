@@ -2,13 +2,13 @@
     height: 80px;
     width: 90%;
     color: #ff84f9;
-    font-weight: bold;
+
     /*border: 0.1rem solid black;*/
 
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 
     border: 5px solid #830057;
     border-radius: 10px;
@@ -19,8 +19,6 @@
     /*box-sizing: border-box;*/
     box-shadow: 0px 2.5px 30px 1px rgba(246, 1, 157, 1);
     transition: box-shadow 1s;
-
-    user-select: none;
 }
 
 #header:hover{
@@ -43,14 +41,4 @@
 #header img:active{
     box-shadow: 0px 0px 30px 8px rgba(239, 255, 12, 0.48);
     height: 80%;
-}
-
-#header #logOut {
-    margin-right: 10px;
-    transition: font-size 0.3s;
-}
-
-#header #logOut:hover{
-    font-size: 20px;
-    cursor: pointer;
 }

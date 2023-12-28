@@ -1,0 +1,88 @@
+#mainContainer{
+    display: flex;
+    flex-direction: column;
+
+    width: 500px;
+    height: 500px;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s;
+}
+
+#mainContainer header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 75px;
+    border-bottom: 5px solid #d50081;
+    background-color: rgba(115, 0, 75, 0.43);
+    box-shadow: 0px 25px 100px 3px rgb(129, 20, 178);
+    line-height: 20px;
+}
+
+#mainContainer header div{
+    flex: 1;
+    margin: 20px;
+}
+
+#mainContainer div:nth-of-type(2){
+    flex: 1.35;
+}
+
+#mainContainer header #idNumber{
+    flex: 0.3;
+    text-align: right;
+}
+
+#bankAccountsList{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#bankAccountsList li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    /*letter-spacing: 0.1px;*/
+    font-size: 20px;
+    color: #ff84f9;
+    margin: 15px;
+    user-select: none;
+}
+
+#bankAccountsList img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    width: 180px;
+    transition: width 0.2s, box-shadow 0.2s;
+}
+
+#bankAccountsList img:hover{
+    width: 190px;
+    box-shadow: 0px 0px 30px 5px #333333;
+    cursor: pointer;
+}
+
+#bankAccountsList img:active{
+    width: 180px;
+    box-shadow: 0px 0px 30px 8px rgba(239, 255, 12, 0.48);
+}

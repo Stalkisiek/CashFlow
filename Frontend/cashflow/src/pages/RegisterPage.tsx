@@ -1,6 +1,6 @@
 import {FC} from "react";
-import {Header} from "./layout/Header";
-import {Footer} from "./layout/Footer";
+import {HeaderNotLogged} from "./layout/HeaderNotLogged";
+import {FooterNotLogged} from "./layout/FooterNotLogged";
 import RegisterForm from "../features/register/RegisterForm";
 
 interface RegisterPageProps{
@@ -10,9 +10,9 @@ interface RegisterPageProps{
 export const RegisterPage: FC<RegisterPageProps> = ({}) => {
     return(
         <div id = 'main'>
-            <Header/>
+            <HeaderNotLogged/>
             <RegisterForm/>
-            <Footer/>
+            <FooterNotLogged/>
         </div>
     );
 };

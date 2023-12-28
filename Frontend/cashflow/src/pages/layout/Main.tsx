@@ -1,7 +1,8 @@
 import {FC} from "react";
-import {Header} from "./Header";
+import {HeaderLogged} from "./HeaderLogged";
 import {Outlet} from "react-router-dom";
-import {Footer} from "./Footer";
+import {FooterLogged} from "./FooterLogged";
+import '../styles/center.css'
 
 interface MainProps{
 
@@ -9,10 +10,10 @@ interface MainProps{
 
 export const Main: FC<MainProps> = ({}) => {
     return(
-        <>
-            <Header/>
+        <div id={'main'}>
+            <HeaderLogged/>
             <Outlet/>
-            <Footer/>
-        </>
+            <FooterLogged/>
+        </div>
     );
 };

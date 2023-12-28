@@ -26,7 +26,7 @@ const publicRoutes = [
             },
             {
                 path: "",
-                element: <MainPage/>
+                element: <MainPage/> /// CHANGE THIS!!!!!
             }
         ]
     }
@@ -39,7 +39,7 @@ const privateRoutes = [
         children: [
             {
                 path: '/home',
-                element: <MainPage/> /// CHANGE THIS!!!!!
+                element: <MainPage/>
             },
             {
                 path: "*",

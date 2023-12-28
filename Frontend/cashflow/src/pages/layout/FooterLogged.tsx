@@ -5,7 +5,7 @@ interface FooterProps{
 
 };
 
-export const Footer: FC<FooterProps> = ({}) => {
+export const FooterLogged: FC<FooterProps> = ({}) => {
     return(
         <div id = 'footer'>
             <p className={'myFont'}>©2024 CashFlow S.A. </p>
