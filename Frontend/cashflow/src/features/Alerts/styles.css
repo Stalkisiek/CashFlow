@@ -1,0 +1,25 @@
+.swal-title {
+    font-family: 'Roboto';
+}
+
+.swal-text{
+    font-family: 'Roboto';
+}
+
+.swal-overlay {
+    background-color: rgba(21, 2, 7, 0.45);
+}
+
+.swal-modal {
+    background-color: rgb(218, 122, 191);
+    border: 3px solid #9f05a9;
+    border-radius: 20px;
+}
+
+.swal-button{
+    background-color: #34032c;
+}
+
+.swal-button:hover{
+    background-color: #c00ba2;
+}

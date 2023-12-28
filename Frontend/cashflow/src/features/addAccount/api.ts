@@ -2,8 +2,9 @@ import {useCookies} from "react-cookie";
 import {API_URL} from "../../config";
 import {ServiceResponse} from "../../types/ServiceResponse";
 import {BankAccount} from "../../types/BankAccount";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+import '../Alerts/styles.css'
+import swal from "sweetalert";
+
 
 export const useAddAccountApi = () => {
     const cookieName = 'auth_token';
@@ -31,11 +32,13 @@ export const useAddAccountApi = () => {
             const serviceResponse: ServiceResponse<BankAccount> = await response.json();
 
             if(!serviceResponse.success){
+                swal("Oops!", serviceResponse.message, "error");
                 throw new Error(serviceResponse.message);
+
             }
         }
-        catch (e) {
-            alert(e);
+        catch (e:any) {
+            throw new Error(e);
         }
     }
     return{

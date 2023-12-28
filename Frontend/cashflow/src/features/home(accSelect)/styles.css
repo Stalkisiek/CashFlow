@@ -66,6 +66,10 @@
     user-select: none;
 }
 
+#bankAccountsList p{
+    margin-bottom: 10px;
+}
+
 #bankAccountsList img{
     display: flex;
     align-items: center;
