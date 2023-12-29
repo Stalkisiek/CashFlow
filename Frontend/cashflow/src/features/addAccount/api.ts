@@ -2,7 +2,7 @@ import {useCookies} from "react-cookie";
 import {API_URL} from "../../config";
 import {ServiceResponse} from "../../types/ServiceResponse";
 import {BankAccount} from "../../types/BankAccount";
-import '../Alerts/styles.css'
+import '../alerts/styles.css'
 import swal from "sweetalert";
 
 
@@ -38,7 +38,7 @@ export const useAddAccountApi = () => {
             }
         }
         catch (e:any) {
-            throw new Error(e);
+            console.error(e);
         }
     }
     return{

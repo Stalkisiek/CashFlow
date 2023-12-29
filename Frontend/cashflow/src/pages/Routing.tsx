@@ -7,6 +7,7 @@ import useAccountAuthorization from "../hooks/useAccountAuthorization";
 import {RegisterPage} from './RegisterPage';
 import {Main} from "./layout/Main";
 import {CreateAccountPage} from "./CreateAccountPage";
+import {SavingsPage} from "./SavingsPage";
 
 const publicRoutes = [
     {
@@ -45,6 +46,10 @@ const privateRoutes = [
             {
               path: '/createAccount',
               element: <CreateAccountPage/>
+            },
+            {
+              path: '/savings',
+              element: <SavingsPage/>
             },
             {
                 path: "*",

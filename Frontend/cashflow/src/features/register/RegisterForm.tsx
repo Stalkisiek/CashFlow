@@ -37,7 +37,7 @@ export const LoginForm: FC<LoginFormProps> = ({}) => {
     }
 
     return(
-        <form onSubmit={handleSubmit}>
+        <form id='mainForm' onSubmit={handleSubmit}>
             <div id="name">
                 <label>Name</label>
                 <input type="text" value={name} onChange={(e) => changeName(e.target.value)} required={true} placeholder={'name'}/>

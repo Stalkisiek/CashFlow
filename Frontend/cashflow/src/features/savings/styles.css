@@ -1,0 +1,77 @@
+#mainAccountContainer{
+    display: flex;
+    flex-direction: column;
+
+    width: 500px;
+    height: 500px;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s;
+}
+
+#mainAccountContainer #accountData{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 75px;
+    border-bottom: 5px solid #d50081;
+    background-color: rgba(115, 0, 75, 0.43);
+    box-shadow: 0px 25px 100px 3px rgb(129, 20, 178);
+    line-height: 20px;
+}
+
+#accountData div{
+    margin: 10px;
+    text-align: right;
+    font-size: 60px;
+}
+
+#accountData img{
+    /*flex: 2;*/
+    height: 80%;
+    margin: 10px;
+    border-radius: 10px;
+
+    user-select: none;
+}
+
+#accountMoney{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+}
+
+.segment{
+    border: 5px solid #d50081;
+    border-top: none;
+    border-left: none;
+    flex: 1;
+    user-select: none;
+}
+
+#transferBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    border-bottom: 5px solid #d50081;
+    background-color: rgba(115, 0, 75, 0.43);
+    box-shadow: 0px 25px 100px 3px rgb(129, 20, 178);
+    line-height: 20px;
+}
+
+#transferBox form{
+    display: flex;
+    flex-direction: row;
+}

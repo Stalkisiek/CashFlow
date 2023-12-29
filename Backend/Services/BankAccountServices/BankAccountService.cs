@@ -337,7 +337,7 @@ public class BankAccountService : IBankAccountService
             }
             if (await GetUserAuthLvl() > (int)AuthorizationLevel.User)
             {
-                bankAccount.Balance += bankAccount.Balance;
+                bankAccount.Balance += amount;
                 await _context.SaveChangesAsync();
                 await _updateService.UpdateAll();
                 response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
@@ -459,7 +459,7 @@ public class BankAccountService : IBankAccountService
             if (userBankAccount is null || targetBankAccount is null)
             {
                 response.Success = false;
-                response.Message = "Not found";
+                response.Message = "Account not found";
                 response.StatusCode = 404;
                 return response;
             }
