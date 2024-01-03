@@ -19,15 +19,15 @@ export const ChangeMain: FC<ChangeMainProps> = ({}) => {
     }
 
     const handleNames = () => {
-        navigate('/update/names');
+        navigate('/update/names', {state: location.pathname});
     }
 
     const handleEmail = () => {
-        navigate('/update/email');
+        navigate('/update/email', {state: location.pathname});
     }
 
     const handlePassword = () => {
-        navigate('/update/password');
+        navigate('/update/password', {state: location.pathname});
     }
 
     return(

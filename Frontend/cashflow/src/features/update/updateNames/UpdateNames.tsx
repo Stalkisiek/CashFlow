@@ -19,11 +19,11 @@ export const UpdateNames = () => {
                 <form action="" id={'mainForm'}>
                     <div id={'name'}>
                         <label htmlFor="">Name</label>
-                        <input type="text" onChange={(e) => changeName(e.target.value)}/>
+                        <input type="text" onChange={(e) => changeName(e.target.value)} placeholder={'name'}/>
                     </div>
                     <div id={'surname'}>
                         <label htmlFor="">Surname</label>
-                        <input type="text" onChange={(e) => changeSurname(e.target.value)}/>
+                        <input type="text" onChange={(e) => changeSurname(e.target.value)} placeholder={'surname'}/>
                     </div>
                     <button onClick={(e) => handleClick(e)}>Update</button>
                 </form>

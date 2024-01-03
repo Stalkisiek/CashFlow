@@ -14,9 +14,10 @@ export const HeaderLogged: FC<HeaderProps> = ({ }) => {
 
     const handleLogout = () => {
         removeCookie("auth_token"); // Remove the auth_token cookie
-
+        document.cookie = 'auth_token' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         // Redirect to the login page or any other desired destination
         navigate("/login"); // Update the destination route as needed
+        window.location.reload();
     }
 
     return (

@@ -1,6 +1,7 @@
 import { useCookies } from "react-cookie";
 import { API_URL } from "../../config";
 import {ServiceResponse} from "../../types/ServiceResponse";
+import Swal from "sweetalert2";
 
 export const useRegisterApi = () => {
     const authCookieName = 'auth_token';
@@ -24,10 +25,15 @@ export const useRegisterApi = () => {
 
             const serviceResponse: ServiceResponse<string> = await response.json();
 
-            if(!serviceResponse.success){
-                console.log(`Register error: ${serviceResponse.message}`);
+            if (!serviceResponse.success) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: serviceResponse.message,
+                    icon: 'error',
+                    confirmButtonText: 'Confirm'
+                });
+                throw new Error(serviceResponse.message);
             }
-
             setCookie(authCookieName, serviceResponse.data, {
                 expires: new Date(Date.now() + 1000 * 60 * 15), // 15 minutes
                 sameSite: true,
