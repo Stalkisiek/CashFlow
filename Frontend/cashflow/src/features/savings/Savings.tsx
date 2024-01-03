@@ -81,45 +81,63 @@ export const Savings: FC<SavingsProps> = ({}) => {
                 </div>
             </header>
             <div id={'accountMoney'}>
-                <div className={'segment'}>
-                    <p>Balance: {bankAccount?.balance}</p>
-                    <form action="">
-                        <button id={'AddingMoneyButton'} onClick={(e) => handleClick(e,3,moneyAddValue)}>Add money</button>
-                        <input type={'range'} min={1} max={10_001} step={1_000} onChange={(e)=>
-                        {if(Number(e.target.value) > 1){
-                            changeMoneyAddValue(Number(e.target.value) - 1);
-                        }
-                        else{
-                            changeMoneyAddValue(Number(e.target.value));
-                        }}}/>
-                        <p>{moneyAddValue}</p>
-                    </form>
-                    <form action="">
-                        <button id={'PayButton'} onClick={(e) => handleClick(e, 1,moneyPayValue)}>Pay</button>
-                        <input type="range" min={1} max={bankAccount?.balance} onChange={(e) => {changeMoneyPayValue(Number(e.target.value))}}/>
-                        <p>{moneyPayValue}</p>
-                    </form>
+                <div className={'mainSegment'}>
+                    <p className={'pulsingValue'}>Balance: {bankAccount?.balance}$</p>
+                    <p className={'presentation'}>Deposit</p>
+                    <div className={'segment'}>
+                        <form action="">
+                            <p>{moneyAddValue}$</p>
+                            <input type={'range'} value={moneyAddValue} min={1} max={10_001} step={1_000} onChange={(e)=>
+                            {if(Number(e.target.value) > 1){
+                                changeMoneyAddValue(Number(e.target.value) - 1);
+                            }
+                            else{
+                                changeMoneyAddValue(Number(e.target.value));
+                            }}}/>
+                            <button id={'AddingMoneyButton'} onClick={(e) => handleClick(e,3,moneyAddValue)}>Add money</button>
+                        </form>
+                    </div>
+                    <p className={'presentation'}>ATM</p>
+                    <div className={'segment'}>
+                        <form action="">
+                            <p>{moneyPayValue}$</p>
+                            <input type="range" value={moneyPayValue} min={1} max={bankAccount?.balance} onChange={(e) => {changeMoneyPayValue(Number(e.target.value))}} />
+                            <button id={'PayButton'} onClick={(e) => handleClick(e, 1,moneyPayValue)}>Pay</button>
+                        </form>
+                    </div>
                 </div>
-                <div className={'segment'}>
-                    <p>Credit: {bankAccount?.creditBalance}</p>
-                    <form action="">
-                        <button id={'AddingCreditButton'} onClick={(e) => handleClick(e,4,creditAddValue)}>Add credit</button>
-                        <input type="range" min={1} max={Number(maxSCredit) - (bankAccount?.creditBalance ?? 0)} onChange={(e) => changeCreditAddValue(Number(e.target.value))}/>
-                        <p>{creditAddValue}</p>
-                    </form>
-                    <form action="">
-                        <button id={'PayingUpCreditButton'} onClick={(e) => handleClick(e,2,creditPayValue)}>Pay up</button>
-                        <input type="range" min={1} max={bankAccount?.creditBalance} onChange={(e) => changeCreditPayValue(Number(e.target.value))}/>
-                        <p>{creditPayValue}</p>
-                    </form>
+                <div className={'mainSegment'}>
+                    <p className={'pulsingValue'}>Credit: {bankAccount?.creditBalance}$</p>
+                    <p className={'presentation'}>Take credit</p>
+                    <div className={'segment'}>
+                        <form action="">
+                            <p>{creditAddValue}$</p>
+                            <input type="range" value={creditAddValue} min={1} max={Number(maxSCredit) - (bankAccount?.creditBalance ?? 0)} onChange={(e) => changeCreditAddValue(Number(e.target.value))}/>
+                            <button id={'AddingCreditButton'} onClick={(e) => handleClick(e,4,creditAddValue)}>Add credit</button>
+                        </form>
+                    </div>
+                    <p className={'presentation'}>Pay credit</p>
+                    <div className={'segment'}>
+                        <form action="">
+                            <p>{creditPayValue}$</p>
+                            <input type="range" value={creditPayValue} min={1} max={bankAccount?.creditBalance} onChange={(e) => changeCreditPayValue(Number(e.target.value))}/>
+                            <button id={'PayingUpCreditButton'} onClick={(e) => handleClick(e,2,creditPayValue)}>Pay up</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div id={'transferBox'}>
                 <form action="">
+                    <p>{transferAmount}$</p>
+                    <input
+                        type="range"
+                        min={1}
+                        max={bankAccount?.balance}
+                        value={transferAmount} // Set the starting value to 1
+                        onChange={(e) => changeTransferAmount(Number(e.target.value))}
+                    />
+                    <input type="number" onChange={(e) => changeTargetId(Number(e.target.value))} required={true} placeholder={'Id'}/>
                     <button id={'TransferButton'} onClick={(e) => handleTransfer(e,targetId,transferAmount)}>Transfer</button>
-                    <input type="range" min={1} max={bankAccount?.balance} onChange={(e) => changeTransferAmount(Number(e.target.value))}/>
-                    <p>{transferAmount}</p>
-                    <input type="number" onChange={(e) => changeTargetId(Number(e.target.value))}/>
                 </form>
             </div>
         </div>

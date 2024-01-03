@@ -6,6 +6,10 @@
     font-family: 'Roboto';
 }
 
+.swal2-popup {
+    font-family: 'Roboto', serif;
+}
+
 .swal2-overlay {
     background-color: rgba(21, 2, 7, 0.45);
 }
