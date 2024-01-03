@@ -3,7 +3,7 @@
     flex-direction: column;
 
     width: 500px;
-    height: 500px;
+    height: 500px !important;
     color: #ff84f9;
 
     font-weight: bold;
@@ -15,7 +15,7 @@
     box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
     background-color: rgba(115, 0, 75, 0.76);
     backdrop-filter: blur(10px);
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s;
 }
 
 #userData{

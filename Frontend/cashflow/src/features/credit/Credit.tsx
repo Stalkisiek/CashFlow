@@ -2,14 +2,14 @@ import {FC, useEffect, useState} from "react";
 import './styles.css'
 import {useSavingsApi, useTransferApi} from "./api";
 import {BankAccount} from "../../types/BankAccount";
-import savings from '../../pictures/savings.png'
-import {API_URL, maxCCredit, maxSCredit} from "../../config";
+import savings from '../../pictures/credit.png'
+import {API_URL, maxCCredit} from "../../config";
 
 interface SavingsProps{
 
 };
 
-export const Savings: FC<SavingsProps> = ({}) => {
+export const Credit: FC<SavingsProps> = ({}) => {
     const {fetchData} = useSavingsApi();
     const {fetchDataTransfer, fetchTransfer} = useTransferApi();
     const[bankAccount, changeBankAccount] = useState<BankAccount | undefined>();
@@ -111,7 +111,7 @@ export const Savings: FC<SavingsProps> = ({}) => {
                     <div className={'segment'}>
                         <form action="">
                             <p>{creditAddValue}$</p>
-                            <input type="range" value={creditAddValue} min={1} max={Number(maxSCredit) - (bankAccount?.creditBalance ?? 0)} onChange={(e) => changeCreditAddValue(Number(e.target.value))}/>
+                            <input type="range" value={creditAddValue} min={1} max={Number(maxCCredit) - (bankAccount?.creditBalance ?? 0)} onChange={(e) => changeCreditAddValue(Number(e.target.value))}/>
                             <button id={'AddingCreditButton'} onClick={(e) => handleClick(e,4,creditAddValue)}>Add credit</button>
                         </form>
                     </div>

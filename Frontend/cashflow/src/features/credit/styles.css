@@ -1,0 +1,290 @@
+*, *::after, *::before {
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-app-region: no-drag;
+    /*cursor: default;*/
+}
+
+#mainAccountContainer{
+    display: flex;
+    flex-direction: column;
+
+    width: 500px;
+    height: 570px;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s;
+}
+
+#mainAccountContainer p{
+    user-select: none;
+}
+
+#mainAccountContainer #randomDataAccount p{
+    user-select: text;
+}
+
+@keyframes pulse {
+    0%{
+        text-shadow: 0 0 10px #f645b1;
+    }
+    50%{
+        text-shadow: 0 0 20px #f645b1;
+    }
+    100%{
+        text-shadow: 0 0 10px #f645b1;
+    }
+}
+
+#mainAccountContainer .pulsingValue{
+    animation: pulse 1s infinite;
+}
+
+#mainAccountContainer #accountData{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 75px;
+    border-bottom: 5px solid #d50081;
+    background-color: rgba(115, 0, 75, 0.43);
+    box-shadow: 0px 25px 100px 3px rgb(129, 20, 178);
+    line-height: 20px;
+}
+
+#accountData div{
+    margin: 10px;
+    text-align: right;
+    font-size: 60px;
+}
+
+#accountData img{
+    /*flex: 2;*/
+    height: 80%;
+    margin: 10px;
+    border-radius: 10px;
+
+    user-select: none;
+}
+
+#accountMoney{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+}
+
+#mainAccountContainer .mainSegment{
+    display: flex;
+    flex-direction: column;
+    border: 5px solid #d50081;
+    margin: 10px;
+
+    box-shadow: 0 0 10px 1px #d50081;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    border-radius: 15px;
+    flex: 1;
+    user-select: none;
+}
+
+#mainAccountContainer .mainSegment:hover{
+    transform: scale(102%);
+    box-shadow: 0 0 20px 1px #d93797;
+}
+
+#transferBox{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    border-top: 5px solid #d50081;
+    background-color: rgba(115, 0, 75, 0.43);
+    box-shadow: 0px 25px 100px 3px rgb(129, 20, 178);
+    line-height: 20px;
+}
+
+#transferBox form{
+    display: flex;
+    flex-direction: row;
+}
+
+#transferBox form input[type='number']{
+    width: 50px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+#transferBox form input[type='number']{
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+#transferBox form input[type='number']:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+#mainAccountContainer form button:hover{
+    transform: scale(1.05);
+}
+
+#mainAccountContainer form button:active{
+    box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
+}
+
+#transferBox form input[type='number']::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+#transferBox *{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+#transferBox form p{
+    flex: 0.6;
+}
+
+#transferBox form input[type='number']{
+    flex: 0.4;
+}
+
+#transferBox form button{
+    height: 30px;
+    flex: 0.6;
+}
+
+#mainAccountContainer button{
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+
+    background: linear-gradient(45deg, #bd38ff, #d700de);
+
+    color: #fff;
+    /*font-size: 18px;*/
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    user-select: none;
+    transition: transform 0.5s, box-shadow 0.5s;
+}
+
+#mainAccountContainer .segment{
+    flex: 1;
+    display: flex;
+
+    margin: 10px;
+    margin-top: 0;
+    border: 5px solid #d50081;
+    border-radius: 15px;
+
+    box-shadow: 0 0 10px 1px #d50081;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#mainAccountContainer .segment:hover{
+    transform: scale(102%);
+    box-shadow: 0 0 20px 1px #d93797;
+}
+
+#mainAccountContainer .presentation{
+    font-size: 15px;
+    margin: 0;
+    margin-bottom: 2px;
+    margin-left: 25px;
+    text-align: left;
+}
+
+#mainAccountContainer .segment form{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#accountMoney p{
+    font-size: 25px;
+    text-align: center;
+    margin: 15px;
+}
+
+#mainAccountContainer .segment input{
+    display: inline-block;
+}
+
+#mainAccountContainer .segment p{
+    display: inline-block;
+    margin: 15px;
+    font-size: 20px;
+}
+
+#mainAccountContainer .segment button{
+    display: block;
+    margin: 15px;
+}
+
+input[type=range]{
+    -webkit-appearance: none;
+
+}
+
+#mainAccountContainer input[type='range']{
+    width: 150px;
+    background-color: #ff84f9;
+    border-radius: 15px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    cursor: pointer;
+    height: 18px;
+    background: #ff84f9;
+    border: none;
+    border-radius: 15px;
+    transition: background 0.3s;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    margin: 1px;
+    background: #463191;
+    transition: box-shadow 0.3s;
+}
+
+input[type=range]::-webkit-slider-thumb:active {
+    box-shadow: 0 0 10px 5px #6c57b2;
+}
+
+input[type=range]:hover {
+    outline: none;
+}
+
+input[type=range]:hover::-webkit-slider-runnable-track {
+    background: #ffb8f3;;
+}

@@ -1,13 +1,14 @@
-#mainForm form{
+.changeHomeContainer #mainContainer{
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
 
-    /*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
-    color: #ff3cef;
-    width: 300px;
-    height: 400px;
+    width: 300px !important;
+    height: 300px !important;
+    color: #ff84f9;
+
     font-weight: bold;
     border-radius: 15px;
     font-size: 15px;
@@ -17,58 +18,14 @@
     box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
     background-color: rgba(115, 0, 75, 0.76);
     backdrop-filter: blur(10px);
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s;
 }
 
-#mainForm form:hover{
-    box-shadow: 8px 8px 37px 18px rgb(129, 20, 178);
-}
-
-#mainForm form label{
-    display: flex;
-    user-select: none;
-    /*justify-content: center;*/
-}
-
-#mainForm form input{
-    border-radius: 5px;
-    height: 20px;
-    background-color: rgba(255, 58, 221, 0.66);
-    border: 2px solid #ff02b3;
-    /*outline: 2px solid #ff70c9;*/
-    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
-
-    transition: box-shadow 1s, transform 1s;
-}
-
-@keyframes shake {
-    0% { transform: translateY(0); }
-    25% { transform: translateY(-1px); }
-    50% { transform: translateY(1px); }
-    75% { transform: translateY(-1px); }
-    100% { transform: translateY(1px); }
-}
-
-#mainForm input:hover{
-    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
-    animation: shake 0.55s;
-}
-
-::placeholder{
-    color: rgba(0, 0, 0, 0.75);
-}
-
-#mainForm #email label{
-    margin-top:15px;
-}
-#mainForm label{
-    margin-top: 15px;
-}
-
-#mainForm #RegisterButtonContainer button {
-    margin-top: 40px;
+.changeHomeContainer #mainContainer button {
+    margin: 10px;
     width: 150px;
     height: 60px;
+    font-weight: 400;
     background: linear-gradient(45deg, #fc00ff, #0059de);
     color: #fff;
     font-size: 18px;
@@ -83,30 +40,32 @@
     user-select: none;
 }
 
-#mainForm #RegisterButtonContainer button:hover {
+.changeHomeContainer #mainContainer button:hover {
     animation-name: gradient-fade; /* Use the animation you defined */
     animation-duration: 1s;
     transform: scale(1.05);
 }
 
-#mainForm #RegisterButtonContainer button:active {
+.changeHomeContainer #mainContainer button:active {
     box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
 }
 
-#mainForm #LoginButton{
+.changeHomeContainer #mainContainer #backButton{
     position: absolute;
-    transform: translateY(200px);
+    transform: translateY(152px);
 
     width: 70px;
     height: 30px;
     border-radius: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0;
 
     background: linear-gradient(45deg, #bd38ff, #d700de);
 
     color: #fff;
     /*font-size: 18px;*/
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
@@ -115,10 +74,10 @@
     transition: transform 0.5s, box-shadow 0.5s;
 }
 
-#mainForm #LoginButton:hover {
+.changeHomeContainer #mainContainer #backButton:hover {
     box-shadow: 0px 0px 30px 10px rgba(250, 169, 255, 0.48);
 }
 
-#mainForm #LoginButton:active {
+.changeHomeContainer #mainContainer #backButton:active {
     box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
 }

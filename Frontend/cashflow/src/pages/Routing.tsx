@@ -8,6 +8,11 @@ import {RegisterPage} from './RegisterPage';
 import {Main} from "./layout/Main";
 import {CreateAccountPage} from "./CreateAccountPage";
 import {SavingsPage} from "./SavingsPage";
+import {CreditPage} from "./CreditPage";
+import {ChangeMain} from "./ChangingData/ChangeMain";
+import {ChangeNames} from "./ChangingData/ChangeNames";
+import {ChangeEmail} from "./ChangingData/ChangeEmail";
+import {ChangePassword} from "./ChangingData/ChangePassword";
 
 const publicRoutes = [
     {
@@ -50,6 +55,26 @@ const privateRoutes = [
             {
               path: '/savings',
               element: <SavingsPage/>
+            },
+            {
+              path: '/credit',
+                element: <CreditPage/>
+            },
+            {
+              path: '/update/home',
+                element: <ChangeMain/>
+            },
+            {
+                path: 'update/names',
+                element: <ChangeNames/>
+            },
+            {
+                path: 'update/email',
+                element: <ChangeEmail/>
+            },
+            {
+                path: 'update/password',
+                element: <ChangePassword/>
             },
             {
                 path: "*",

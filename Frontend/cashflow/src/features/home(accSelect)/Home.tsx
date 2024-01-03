@@ -17,6 +17,7 @@ export const Home: FC<HomeProps> = ({}) => {
     const [bankAccounts, setBankAccounts] = useState<BankAccount[] | undefined>([]);
     const navigate = useNavigate();
 
+    const [counter, setCounter] = useState(0);
     useEffect(() => {
         fetchData()
             .then((newUser ) => {
@@ -25,6 +26,16 @@ export const Home: FC<HomeProps> = ({}) => {
             .catch((error) => {
                 console.error(error);
             });
+        const intervalNr = setInterval(() => {
+            fetchData()
+                .then((newUser ) => {
+                    setUser(newUser);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+            setCounter((prevCounter) => prevCounter + 1);
+        }, 1000)
         fetchBankData()
             .then((newBankAccounts) => {
                 setBankAccounts(newBankAccounts)
@@ -48,46 +59,48 @@ export const Home: FC<HomeProps> = ({}) => {
     }
 
     return (
-        <div id={'mainContainer'}>
-            <header id={'userData'}>
-                <div id={'Names'}>
-                    <p>Name: {user?.name}</p>
-                    <p>Surname: {user?.surname}</p>
-                </div>
-                <div id={'AdditionalInfo'}>
-                    <p>Email: {user?.email}</p>
-                    <p>Account Level: {user?.authorizationLevel}</p>
-                </div>
-                <div id={'idNumber'}>
-                    <p>Id: {user?.id}</p>
-                </div>
-            </header>
-            <ul id={'bankAccountsList'}>
-                {bankAccounts?.map((account) => (
-                    <li key={account.id}>
-                        {/* Render the details of each bank account here */}
-                        {/*{account.type === 1 ? '../../pictures/savings.png' : '../../pictures/credit.png'}*/}
-                        <p>{account.type === 1 ? 'Savings' : account.type === 0 ? 'Add account' : 'Credit'}</p>
-                        <img
-                            src={account.type === 1 ? savings : account.type === 0 ? addPhoto : credit}
-                            alt=""
-                            onClick={() => {
-                                switch (account.type) {
-                                    case 1:
-                                        navigate('/savings');
-                                        break;
-                                    case 0:
-                                        navigate('/createAccount');
-                                        break;
-                                    default:
-                                        navigate('/credit');
-                                        break;
-                                }
-                            }}
-                        />
-                    </li>
-                ))}
-            </ul>
+        <div className={'homePageContainer'}>
+            <div id={'mainContainer'}>
+                <header id={'userData'}>
+                    <div id={'Names'}>
+                        <p>Name: {user?.name}</p>
+                        <p>Surname: {user?.surname}</p>
+                    </div>
+                    <div id={'AdditionalInfo'}>
+                        <p>Email: {user?.email}</p>
+                        <p>Account Level: {user?.authorizationLevel}</p>
+                    </div>
+                    <div id={'idNumber'}>
+                        <p>Id: {user?.id}</p>
+                    </div>
+                </header>
+                <ul id={'bankAccountsList'}>
+                    {bankAccounts?.map((account) => (
+                        <li key={account.id}>
+                            {/* Render the details of each bank account here */}
+                            {/*{account.type === 1 ? '../../pictures/savings.png' : '../../pictures/credit.png'}*/}
+                            <p>{account.type === 1 ? 'Savings' : account.type === 0 ? 'Add account' : 'Credit'}</p>
+                            <img
+                                src={account.type === 1 ? savings : account.type === 0 ? addPhoto : credit}
+                                alt=""
+                                onClick={() => {
+                                    switch (account.type) {
+                                        case 1:
+                                            navigate('/savings');
+                                            break;
+                                        case 0:
+                                            navigate('/createAccount');
+                                            break;
+                                        default:
+                                            navigate('/credit');
+                                            break;
+                                    }
+                                }}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };

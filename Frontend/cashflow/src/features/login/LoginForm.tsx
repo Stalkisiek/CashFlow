@@ -37,7 +37,6 @@ export const LoginForm: FC<LoginFormProps> = ({}) => {
     }
 
     return(
-
             <form id={'mainForm'} onSubmit={handleSubmit}>
                 <img src={logo} alt=""/>
                 <div id="email">
