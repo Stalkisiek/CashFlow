@@ -6,13 +6,14 @@ import { Request } from "../../types/Request";
 import { useAdminPanelApi } from "./api";
 import plusPhoto from '../../pictures/plusSign.png'
 import minusPhoto from '../../pictures/minusSign.png'
+import arrowPhoto from '../../pictures/arrow.png'
 import Swal from "sweetalert2";
 
 interface AdminPanelProps { }
 
 export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
     const [requests, changeRequests] = useState<Request[] | undefined>([]);
-
+    const [showFilters, setShowFilters] = useState<boolean>(false);
     const { fetchData, fulfillRequest } = useAdminPanelApi();
 
     useEffect(() => {
@@ -62,9 +63,15 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
         }
     };
 
+    const handleFilterClick = () => {
+        setShowFilters(!showFilters);
+        console.log(123);
+    }
 
     return (
         <div className={'adminPanelContainer'}>
+            <img src={arrowPhoto} alt="" id={'filtersButton'} onClick={handleFilterClick}/>
+            <div id={`requestFilters`} className={showFilters ? 'show' : 'hide'}></div>
                 <ul id={'requestsList'}>
                     {requests && requests.map((request) => (
                         <div key={request.id}>

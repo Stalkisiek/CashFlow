@@ -1,4 +1,5 @@
 .adminPanelContainer{
+    opacity: 1;
     display: flex;
     flex-direction: column;
 
@@ -146,3 +147,64 @@
     margin-right: 5px;
 }
 
+.adminPanelContainer #filtersButton {
+    width: 30px;
+    position: absolute;
+    left: 0; /* Position it on the left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%) translateX(-50%) rotateY(180deg); /* Center vertically */
+    border: 3px solid #8e3191;
+    padding-top: 0px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
+    /* Add other styles for the filtersButton */
+}
+
+.adminPanelContainer #filtersButton:hover {
+    scale: 102%;
+    box-shadow: 0px 0px 15px 5px #d93797;
+    cursor: pointer;
+}
+
+.adminPanelContainer #filtersButton:active {
+    scale: 90%;
+    box-shadow: 0px 0px 15px 5px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer .show{
+    opacity: 1 !important;
+}
+
+.adminPanelContainer .hide{
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.adminPanelContainer #requestFilters{
+    position: absolute;
+    top: 25%; /* Center vertically */
+    transform: translateX(-120%);
+
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+
+
+    width: 200px;
+    height: 350px !important;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, opacity 0.5s, transform 0.5s;
+}
