@@ -20,14 +20,34 @@ export const useAdminPanelApi = () => {
         };
     }
 
-    const fetchData = async() => {
-        try{
-            const response = await fetch(`${API_URL}/Requests`, {
+    const fetchData = async (userId?: number, requestId?: number, requestType?: number) => {
+        try {
+            let url = `${API_URL}/Requests`;
+            console.log(`userId: ${userId}, requestId: ${requestId}, requestType: ${requestType}`);
+
+            const queryParams = new URLSearchParams();
+            if (userId !== undefined && userId !== 0) {
+                queryParams.append('userId', userId.toString());
+            }
+            if (requestId !== undefined && requestId !== 0) {
+                queryParams.append('requestId', requestId.toString());
+            }
+            if (requestType !== undefined && requestType !== 0) {
+                queryParams.append('requestType', requestType.toString());
+            }
+            // console.log(queryParams);
+            url += '?' + queryParams.toString();
+
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: headersCreator(),
-            })
-            const serviceResponse : ServiceResponse<Request[]> = await response.json();
-            if(!serviceResponse.success){
+            });
+
+            const serviceResponse: ServiceResponse<Request[]> = await response.json();
+            console.log(url);
+            console.log(serviceResponse);
+
+            if (!serviceResponse.success) {
                 Swal.fire({
                     title: 'Error!',
                     text: serviceResponse.message,
@@ -38,11 +58,11 @@ export const useAdminPanelApi = () => {
             }
 
             return serviceResponse.data;
-        }
-        catch (e:any) {
+        } catch (e: any) {
             console.error(e);
         }
     }
+
 
     const fulfillRequest = async(id:number, ifAccept:boolean, message:string) => {
         try{

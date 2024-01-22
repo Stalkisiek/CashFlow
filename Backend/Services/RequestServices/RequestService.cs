@@ -4,6 +4,7 @@ using CashFlow.Data;
 using CashFlow.Dtos.Request;
 using CashFlow.Models;
 using CashFlow.Services.UpdateServices;
+using System.Linq;
 
 namespace CashFlow.Services.RequestServices;
 
@@ -38,14 +39,31 @@ public class RequestService : IRequestService
         return user is null ? -1 : (int)user.AuthorizationLevel;
     }
     
-    public async Task<ServiceResponse<List<GetRequestDto>>> GetAll()
+    public async Task<ServiceResponse<List<GetRequestDto>>> GetAll(int? userId = null, int? requestId = null, int? requestType = null)
     {
         var response = new ServiceResponse<List<GetRequestDto>>();
         try
         {
             if (await GetUserAuthLvl() > (int)AuthorizationLevel.User)
             {
-                response.Data = await _context.Requests.Select(r => _mapper.Map<GetRequestDto>(r)).ToListAsync();
+                var query = _context.Requests.AsQueryable();
+
+                if (userId.HasValue)
+                {
+                    query = query.Where(r => r.UserId == userId);
+                }
+
+                if (requestId.HasValue)
+                {
+                    query = query.Where(r => r.Id == requestId);
+                }
+
+                if (requestType.HasValue)
+                {
+                    query = query.Where(r => (int)r.Type == (int)requestType);
+                }
+
+                response.Data = await query.Select(r => _mapper.Map<GetRequestDto>(r)).ToListAsync();
             }
             else
             {
@@ -63,6 +81,7 @@ public class RequestService : IRequestService
 
         return response;
     }
+
 
     public async Task<ServiceResponse<List<GetPreviousRequestDto>>> GetAllWithinUser(int id, bool showOnlyPending) // if show all include accepted
     {

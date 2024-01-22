@@ -14,26 +14,27 @@ interface AdminPanelProps { }
 export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
     const [requests, changeRequests] = useState<Request[] | undefined>([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
+    const [filterRequestId, setFilterRequestId] = useState<number | undefined>(undefined);
+    const [filterUserId, setFilterUserId] = useState<number | undefined>(undefined);
+    const [filterType, setFilterType] = useState<number | undefined>(0);
+    const [easyFinalize, setEasyFinalize] = useState<boolean>(false);
     const { fetchData, fulfillRequest } = useAdminPanelApi();
 
     useEffect(() => {
-        fetchData()
-            .then((newRequests) => {
-                changeRequests(newRequests);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        const setIntervalNr = setInterval(() => {
-            fetchData()
+        const fetchInterval = setInterval(() => {
+            fetchData(filterUserId,filterRequestId, filterType)
                 .then((newRequests) => {
                     changeRequests(newRequests);
                 })
                 .catch((error) => {
                     console.error(error);
                 });
-        }, 1000);
-    }, []);
+        }, 500);
+
+        // Funkcja czyszcząca przy odmontowywaniu komponentu
+        return () => clearInterval(fetchInterval);
+    }, [filterRequestId, filterUserId, filterType]); // Lista zależności
+
 
     const handleAcceptClick = async (requestId: number, ifAccept: boolean) => {
         const { isConfirmed } = await Swal.fire({
@@ -46,8 +47,10 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
             confirmButtonText: "Proceed",
             cancelButtonText: "Go back"
         });
-
-        if (isConfirmed) {
+        if(isConfirmed && easyFinalize){
+            fulfillRequest(requestId, ifAccept, 'Further details are not needed');
+        }
+        if (isConfirmed && !easyFinalize) {
             const { value: userInput } = await Swal.fire({
                 title: 'Attached request message',
                 input: 'text',
@@ -63,15 +66,65 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
         }
     };
 
-    const handleFilterClick = () => {
+    const handleShowFilters = () => {
         setShowFilters(!showFilters);
-        console.log(123);
+    }
+
+    const handleFilter = () => {
+
     }
 
     return (
         <div className={'adminPanelContainer'}>
-            <img src={arrowPhoto} alt="" id={'filtersButton'} onClick={handleFilterClick}/>
-            <div id={`requestFilters`} className={showFilters ? 'show' : 'hide'}></div>
+            <img src={arrowPhoto} alt="" id={'filtersButton'} onClick={handleShowFilters}/>
+            <div id={`requestFilters`} className={showFilters ? 'show' : 'hide'}>
+                <div id={'filterByUserId'}>
+                    <p>Filter by user id:</p>
+                    <div className="filter-input-container">
+                        <input type="number" id={'filterUserId'} value={filterUserId || ''} onChange={(e) => setFilterUserId(Number(e.target.value))} />
+                        <button onClick={() =>
+                        { setFilterUserId(undefined);
+                            const requestIdInput = document.getElementById('filterUserId') as HTMLInputElement | null;
+                            if (requestIdInput) {
+                                requestIdInput.value = '';
+                            }}}>Clear</button>
+                    </div>
+                </div>
+                <div id={'filterByRequestId'}>
+                    <p>Filter by request id:</p>
+                    <div className="filter-input-container">
+                        <input type="number" id={'filterRequestId'} value={filterRequestId || ''} onChange={(e) => setFilterRequestId(Number(e.target.value))} />
+                        <button onClick={() =>
+                        { setFilterRequestId(undefined);
+                            const requestIdInput = document.getElementById('filterRequestId') as HTMLInputElement | null;
+                            if (requestIdInput) {
+                                requestIdInput.value = '';
+                            }}}>Clear</button>
+                    </div>
+                </div>
+                <div id={'filterByType'}>
+                    <p>Filter by type:</p>
+                    <div className="filter-input-container">
+                        <select name="filterType" id="filterType" onChange={(e) => {setFilterType(parseInt(e.target.value)); console.log(filterType)}}>
+                            <option value="0">All</option>
+                            <option value="1">Delete User</option>
+                            <option value="2">Delete Account</option>
+                            <option value="3">Add Money</option>
+                            <option value="4">Add Credit</option>
+                        </select>
+                        <button onClick={() =>
+                        { setFilterType(undefined);
+                            const requestIdInput = document.getElementById('filterType') as HTMLInputElement | null;
+                            if (requestIdInput) {
+                                requestIdInput.value = '0';
+                            }}}>Clear</button>
+                    </div>
+                </div>
+                <div id={'easyFinalize'}>
+                    <p>Easy finalize:</p>
+                    <input type="checkbox" id={'easyFinalizeCheckbox'} onClick={() => setEasyFinalize(!easyFinalize)}/>
+                </div>
+            </div>
                 <ul id={'requestsList'}>
                     {requests && requests.map((request) => (
                         <div key={request.id}>
