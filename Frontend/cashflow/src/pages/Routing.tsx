@@ -15,6 +15,7 @@ import {ChangeNames} from "./ChangingData/ChangeNames";
 import {ChangeEmail} from "./ChangingData/ChangeEmail";
 import {ChangePassword} from "./ChangingData/ChangePassword";
 import useAccountAdministratorLevel from "../hooks/useAccountAdministratorLevel";
+import {AdminPanel} from "../features/adminPanel/AdminPanel";
 
 const publicRoutes = [
     {
@@ -125,7 +126,7 @@ const adminRoutes = [
             },
             {
                 path: 'admin/panel',
-                element: <MainPage/>
+                element: <AdminPanel/>
             },
             {
                 path: "*",

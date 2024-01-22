@@ -22,7 +22,7 @@ export const HeaderLoggedAdmin: FC<HeaderProps> = ({ }) => {
     }
 
     const handleAdminPanel = () => {
-        navigate('/adminPanel');
+        navigate('/admin/panel');
     }
 
     return (

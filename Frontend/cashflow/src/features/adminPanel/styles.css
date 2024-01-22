@@ -1,0 +1,148 @@
+.adminPanelContainer{
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+    height: 80% !important;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s;
+}
+
+.adminPanelContainer #requestsList {
+    max-height: none;
+    overflow-y: auto;
+}
+
+.adminPanelContainer #requestsList::-webkit-scrollbar {
+    width: 10px;
+    background-color: #720045;
+    border-radius: 30px;
+}
+
+.adminPanelContainer #requestsList::-webkit-scrollbar-thumb {
+    background-color: #ff84f9;
+    border-radius: 30px;
+}
+
+.adminPanelContainer #requestsList div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.adminPanelContainer #requestsList div .singleRequest{
+    width: 75%;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    border: 4px solid #d50081;
+    box-shadow: 0 0 3px 1px #d50081;
+    border-radius: 5px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.adminPanelContainer #requestsList div .singleRequest:hover{
+    transform: scale(101%);
+    box-shadow: 0 0 20px 1px #d93797;
+}
+
+.adminPanelContainer #requestsList div .singleRequest:last-of-type{
+    margin-bottom: 20px;
+}
+
+.adminPanelContainer #requestsList div .singleRequest > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    flex: 1;
+}
+
+.adminPanelContainer #requestsList .singleRequest > div:nth-of-type(1){
+    border-right:4px solid #d50081;
+}
+
+.adminPanelContainer #requestsList .singleRequest > div:nth-of-type(2){
+    border-right:4px solid #d50081;
+}
+
+.adminPanelContainer #requestsList .singleRequest > div:nth-of-type(3){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    border-right: none;
+}
+
+.adminPanelContainer #requestsList .decisionRequestsImages{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column !important;
+    /*margin-top: 20px;*/
+    margin-left: 5px;
+}
+
+
+.adminPanelContainer .decisionRequestsImages img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 50px;
+    /*width: 45%;*/
+    margin: 5px;
+    padding: 5px;
+    box-shadow: 0 0 5px 1px #d50081;
+    transition: transform 0.2s, box-shadow 0.5s, scale 0.5s;
+}
+
+.adminPanelContainer .decisionRequestsImages img:hover{
+    scale: 105%;
+    box-shadow: 0px 0px 15px 1px #333333;
+    cursor: pointer;
+}
+
+.adminPanelContainer .decisionRequestsImages img:active{
+    scale: 90%;
+    box-shadow: 0px 0px 15px 1px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer #requestsList .singleRequest > div > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #d50081;
+    padding: 5px;
+    width: 100%;
+}
+
+.adminPanelContainer #requestsList .singleRequest > div > div {
+    flex: 1;
+}
+
+.adminPanelContainer #requestsList .singleRequest > div > div:nth-of-type(3){
+    border-bottom: none;
+}
+
+.adminPanelContainer #requestsList .singleRequest > div > div p{
+    text-align: center;
+    margin-right: 5px;
+}
+
