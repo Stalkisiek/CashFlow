@@ -53,6 +53,7 @@
     box-shadow: 0 0 3px 1px #d50081;
     border-radius: 5px;
     transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
 }
 
 .adminPanelContainer #requestsList div .singleRequest:hover{
@@ -185,16 +186,17 @@
 
 .adminPanelContainer #requestFilters{
     position: absolute;
-    top: 25%; /* Center vertically */
+    top: 34%; /* Center vertically */
     transform: translateX(-120%);
 
     opacity: 1;
     display: flex;
     flex-direction: column;
-
+    justify-content: space-evenly;
+    font-size: 15px;
 
     width: 200px;
-    height: 350px !important;
+    height: 220px !important;
     color: #ff84f9;
 
     font-weight: bold;
@@ -207,4 +209,307 @@
     background-color: rgba(115, 0, 75, 0.76);
     backdrop-filter: blur(10px);
     transition: box-shadow 0.3s, width 0.5s, height 0.5s, opacity 0.5s, transform 0.5s;
+}
+
+.adminPanelContainer #requestFilters > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+}
+
+.adminPanelContainer #requestFilters > div:nth-of-type(4){
+    margin-bottom: 10px;
+}
+
+.adminPanelContainer #requestFilters > div > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+
+}
+
+.adminPanelContainer #requestFilters > div > div *{
+    margin-right: 5px;
+
+}
+
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.adminPanelContainer #requestFilters input[type='number']{
+    display: inline-block;
+    width: 50px;
+
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #requestFilters input[type='number']:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #requestFilters button{
+    width: 40px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0;
+    background: linear-gradient(45deg, #bd38ff, #d700de);
+
+    color: #fff;
+    /*font-size: 18px;*/
+    border: none;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    user-select: none;
+    transition: transform 0.1s, box-shadow 0.3s;
+}
+
+.adminPanelContainer #requestFilters button:hover{
+    box-shadow: 0 0 5px 1px #d93797;
+}
+
+.adminPanelContainer #requestFilters button:active{
+    box-shadow: 0px 0px 10px 1px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer #requestFilters select{
+    display: inline-block;
+    width: 117px;
+    text-align: center;
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #requestFilters select:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #requestFilters #easyFinalize{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminPanelContainer #requestFilters input[type='checkbox']{
+    border-radius: 5px;
+    background-color: #ffb8f3;
+    color: #34032c;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #requestFilters #filtersHeader{
+    position: absolute;
+    top: 0;
+    transform: translateX(75%) translateY(-115%);
+
+    width: 70px;
+    height: 25px;
+
+    border: 3px solid #8e3191;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
+}
+
+.adminPanelContainer #newRequestButton {
+    width: 30px;
+    position: absolute;
+    right: 0; /* Position it on the left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%) translateX(50%); /* Center vertically */
+    border: 3px solid #8e3191;
+    padding-top: 0px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
+    /* Add other styles for the filtersButton */
+}
+
+.adminPanelContainer #newRequestButton:hover {
+    scale: 102%;
+    box-shadow: 0px 0px 15px 5px #d93797;
+    cursor: pointer;
+}
+
+.adminPanelContainer #newRequestButton:active {
+    scale: 90%;
+    box-shadow: 0px 0px 15px 5px rgba(239, 255, 12, 0.48);
+}
+
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+.adminPanelContainer .showNew{
+    opacity: 1 !important;
+}
+
+.adminPanelContainer .hideNew{
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.adminPanelContainer #requestNew{
+    position: absolute;
+    top: 34%; /* Center vertically */
+    transform: translateX(120%);
+    right: 0;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 15px;
+
+    width: 200px;
+    height: 220px !important;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, opacity 0.5s, transform 0.5s;
+}
+
+.adminPanelContainer #requestNew > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+}
+
+.adminPanelContainer #requestNew > div > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+}
+
+.adminPanelContainer #requestNew > div:nth-of-type(4){
+    margin-bottom: 10px;
+}
+
+.adminPanelContainer #requestNew > div > div *{
+    margin-right: 5px;
+
+}
+
+.adminPanelContainer #requestNew input[type='number']{
+    display: inline-block;
+    width: 50px;
+
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #requestNew input[type='number']:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #requestNew button{
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0;
+    background: linear-gradient(45deg, #bd38ff, #d700de);
+
+    color: #fff;
+    /*font-size: 18px;*/
+    border: none;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    user-select: none;
+    transition: transform 0.1s, box-shadow 0.3s;
+}
+
+.adminPanelContainer #requestNew button:hover{
+    box-shadow: 0 0 5px 1px #d93797;
+}
+
+.adminPanelContainer #requestNew button:active{
+    box-shadow: 0px 0px 10px 1px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer #requestNew select{
+    display: inline-block;
+    width: 117px;
+    text-align: center;
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #requestNew select:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #requestNew #requestNewHeader{
+    position: absolute;
+    top: 0;
+    transform: translateX(29%) translateY(-115%);
+
+    width: 120px;
+    height: 25px;
+
+    border: 3px solid #8e3191;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
 }

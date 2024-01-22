@@ -19,11 +19,13 @@ public class RequestController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<GetRequestDto>>>> GetAll()
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<List<GetRequestDto>>>> GetAll(int? userId = null, int? requestId = null, int? requestType = null)
     {
-        var response = await _requestService.GetAll();
+        var response = await _requestService.GetAll(userId, requestId, requestType);
         return StatusCode(response.StatusCode, response);
     }
+
     
     [HttpGet("{userId:int}")]
     public async Task<ActionResult<ServiceResponse<List<GetRequestDto>>>> GetAllByUserId(int userId, bool showOnlyPending)

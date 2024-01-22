@@ -8,17 +8,25 @@ import plusPhoto from '../../pictures/plusSign.png'
 import minusPhoto from '../../pictures/minusSign.png'
 import arrowPhoto from '../../pictures/arrow.png'
 import Swal from "sweetalert2";
+import {User} from "../../types/User";
 
 interface AdminPanelProps { }
 
 export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
     const [requests, changeRequests] = useState<Request[] | undefined>([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
+    const [showNewRequest, setShowNewRequest] = useState<boolean>(false);
     const [filterRequestId, setFilterRequestId] = useState<number | undefined>(undefined);
     const [filterUserId, setFilterUserId] = useState<number | undefined>(undefined);
     const [filterType, setFilterType] = useState<number | undefined>(0);
     const [easyFinalize, setEasyFinalize] = useState<boolean>(false);
-    const { fetchData, fulfillRequest } = useAdminPanelApi();
+    //
+
+    const[newRequestType, setNewRequestType] = useState<number>(1);
+    const[newRequestUserId, setNewRequestUserId] = useState<number>(1);
+    const[newRequestAmountBalance, setNewRequestAmountBalance] = useState<number>(1);
+    const[newRequestAmountCredit, setNewRequestAmountCredit] = useState<number>(1);
+    const { fetchData, fulfillRequest, createRequest, getUser} = useAdminPanelApi();
 
     useEffect(() => {
         const fetchInterval = setInterval(() => {
@@ -37,6 +45,10 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
 
 
     const handleAcceptClick = async (requestId: number, ifAccept: boolean) => {
+        if(easyFinalize){
+            fulfillRequest(requestId, ifAccept, 'Further details are not needed');
+            return 0;
+        }
         const { isConfirmed } = await Swal.fire({
             title: `Are you sure you want to ${ifAccept?'accept':'decline'} this request?`,
             text: "You won't be able to revert this!",
@@ -47,9 +59,7 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
             confirmButtonText: "Proceed",
             cancelButtonText: "Go back"
         });
-        if(isConfirmed && easyFinalize){
-            fulfillRequest(requestId, ifAccept, 'Further details are not needed');
-        }
+
         if (isConfirmed && !easyFinalize) {
             const { value: userInput } = await Swal.fire({
                 title: 'Attached request message',
@@ -66,18 +76,54 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
         }
     };
 
+    const handleCreateRequestClick = async () => {
+        const { isConfirmed } = await Swal.fire({
+            title: `Are you sure you want to create this request?`,
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Proceed",
+            cancelButtonText: "Go back"
+        });
+        if(isConfirmed){
+            createRequest(newRequestUserId, newRequestType, newRequestAmountBalance, newRequestAmountCredit);
+        }
+    }
+
+    const handleUserClick = async (userId:number) => {
+        const userData = await getUser(userId);
+        if(userData){
+            Swal.fire({
+                title: `User data`,
+                html: `<p>Id: ${userData.id}</p>
+                   <p>Username: ${userData.name}</p>
+                   <p>First name: ${userData.surname}</p>
+                   <p>Last name: ${userData.email}</p>
+                   <p>Account authorization: ${userData.authorizationLevel === 1 ? 'User' : userData.authorizationLevel === 2 ? 'Admin': 'Server'}</p>`,
+                icon: 'info',
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Ok",
+            })
+        }
+    }
+
     const handleShowFilters = () => {
         setShowFilters(!showFilters);
     }
 
-    const handleFilter = () => {
-
+    const handleShowNewRequest = () => {
+        setShowNewRequest(!showNewRequest);
     }
 
     return (
         <div className={'adminPanelContainer'}>
             <img src={arrowPhoto} alt="" id={'filtersButton'} onClick={handleShowFilters}/>
             <div id={`requestFilters`} className={showFilters ? 'show' : 'hide'}>
+                <div id={'filtersHeader'}>
+                    <p>Filters</p>
+                </div>
                 <div id={'filterByUserId'}>
                     <p>Filter by user id:</p>
                     <div className="filter-input-container">
@@ -105,7 +151,7 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
                 <div id={'filterByType'}>
                     <p>Filter by type:</p>
                     <div className="filter-input-container">
-                        <select name="filterType" id="filterType" onChange={(e) => {setFilterType(parseInt(e.target.value)); console.log(filterType)}}>
+                        <select name="filterType" id="filterType" onChange={(e) => {setFilterType(parseInt(e.target.value))}}>
                             <option value="0">All</option>
                             <option value="1">Delete User</option>
                             <option value="2">Delete Account</option>
@@ -125,10 +171,40 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
                     <input type="checkbox" id={'easyFinalizeCheckbox'} onClick={() => setEasyFinalize(!easyFinalize)}/>
                 </div>
             </div>
+            <img src={arrowPhoto} alt="" id={'newRequestButton'} onClick={handleShowNewRequest}/>
+            <div id={'requestNew'} className={`${showNewRequest ? 'showNew' : 'hideNew'}`}>
+                <div id={'requestNewHeader'}>
+                    <p>Create request</p>
+                </div>
+                <div id={'newRequestType'}>
+                    <p>Request type:</p>
+                    <select name="newRequestType" id="newRequestType" onChange={(e) => setNewRequestType(Number(e.target.value))}>
+                        <option value="1">Delete User</option>
+                        <option value="2">Delete Account</option>
+                        <option value="3">Add Money</option>
+                        <option value="4">Add Credit</option>
+                    </select>
+                </div>
+                <div id={'newRequestUserId'}>
+                    <p>Account id:</p>
+                    <input type="number" id={'newRequestUserIdInput'} onChange={(e) => setNewRequestUserId(Number(e.target.value))}/>
+                </div>
+                <div id={'newRequestAmountBalance'}>
+                    <p>Amount balance:</p>
+                    <input type="number" id={'newRequestAmountBalanceInput'} onChange={(e) => setNewRequestAmountBalance(Number(e.target.value))}/>
+                </div>
+                <div id={'newRequestAmountCredit'}>
+                    <p>Amount credit:</p>
+                    <input type="number" id={'newRequestAmountCreditInput'} onChange={(e)=>setNewRequestAmountCredit(Number(e.target.value))}/>
+                </div>
+                <div id={'newRequestButton'}>
+                    <button onClick={handleCreateRequestClick}>Create!</button>
+                </div>
+            </div>
                 <ul id={'requestsList'}>
                     {requests && requests.map((request) => (
                         <div key={request.id}>
-                            <li className={'singleRequest'}>
+                            <li className={'singleRequest'} onClick={() => handleUserClick(request.userId)}>
                                 <div className={'initialInformation'}>
                                     <div id={'requestId'}>
                                         <p>Id:</p>
