@@ -1,4 +1,4 @@
-#headerLogged{
+#headerIsAdmin{
     height: 80px;
     width: 90%;
     color: #ff84f9;
@@ -23,34 +23,47 @@
     user-select: none;
 }
 
-#headerLogged:hover{
+#headerIsAdmin:hover{
     box-shadow: 0px 10px 30px 1px rgba(246, 1, 157, 1);
 }
 
-#headerLogged img{
+#headerIsAdmin img{
     height: 80%;
     border-radius: 15px;
     margin: 10px;
     transition: box-shadow 0.4s, height 0.4s;
 }
 
-#headerLogged img:hover{
+#headerIsAdmin img:hover{
     cursor: pointer;
     height: 85%;
     box-shadow: 0px 0px 30px 5px #333333;
 }
 
-#headerLogged img:active{
+#headerIsAdmin img:active{
     box-shadow: 0px 0px 30px 8px rgba(239, 255, 12, 0.48);
     height: 80%;
 }
 
-#headerLogged #logOut {
-    margin-right: 10px;
-    transition: font-size 0.3s;
+#headerIsAdmin .elementsOnTheRight{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
-#headerLogged #logOut:hover{
-    font-size: 20px;
+#headerIsAdmin .elementsOnTheRight #adminPanelButton{
+    margin-top: 2px;
+}
+
+#headerIsAdmin .elementsOnTheRight * {
+    margin-right: 10px;
+    transition: font-size 0.3s, color 0.1s;
+}
+
+#headerIsAdmin .elementsOnTheRight *:hover {
+    color: #ffbefa;
+    text-decoration: underline;
     cursor: pointer;
 }
+

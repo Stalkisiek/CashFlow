@@ -6,6 +6,7 @@ import {MainPage} from "./MainPage";
 import useAccountAuthorization from "../hooks/useAccountAuthorization";
 import {RegisterPage} from './RegisterPage';
 import {Main} from "./layout/Main";
+import {MainAdmin} from "./layout/MainAdmin";
 import {CreateAccountPage} from "./CreateAccountPage";
 import {SavingsPage} from "./SavingsPage";
 import {CreditPage} from "./CreditPage";
@@ -13,6 +14,7 @@ import {ChangeMain} from "./ChangingData/ChangeMain";
 import {ChangeNames} from "./ChangingData/ChangeNames";
 import {ChangeEmail} from "./ChangingData/ChangeEmail";
 import {ChangePassword} from "./ChangingData/ChangePassword";
+import useAccountAdministratorLevel from "../hooks/useAccountAdministratorLevel";
 
 const publicRoutes = [
     {
@@ -84,10 +86,71 @@ const privateRoutes = [
     }
 ]
 
+const adminRoutes = [
+    {
+        path: '/',
+        element: <MainAdmin/>,
+        children: [
+            {
+                path: '/home',
+                element: <MainPage/>
+            },
+            {
+                path: '/createAccount',
+                element: <CreateAccountPage/>
+            },
+            {
+                path: '/savings',
+                element: <SavingsPage/>
+            },
+            {
+                path: '/credit',
+                element: <CreditPage/>
+            },
+            {
+                path: '/update/home',
+                element: <ChangeMain/>
+            },
+            {
+                path: 'update/names',
+                element: <ChangeNames/>
+            },
+            {
+                path: 'update/email',
+                element: <ChangeEmail/>
+            },
+            {
+                path: 'update/password',
+                element: <ChangePassword/>
+            },
+            {
+                path: 'admin/panel',
+                element: <MainPage/>
+            },
+            {
+                path: "*",
+                element: <Navigate to="/home" replace/>
+            }
+        ]
+    }
+]
+
 interface MainPageProps {
 }
 
-export const Routing: FC = function() {
-    const routes = useAccountAuthorization() ? privateRoutes : publicRoutes;
+export const Routing: FC = function () {
+    const isAuthorized = useAccountAuthorization();
+    const isAdmin = useAccountAdministratorLevel();
+
+    let routes;
+
+    if (isAuthorized && isAdmin) {
+        routes = adminRoutes;
+    } else if (isAuthorized) {
+        routes = privateRoutes;
+    } else {
+        routes = publicRoutes;
+    }
+
     return useRoutes(routes);
-}
+};
