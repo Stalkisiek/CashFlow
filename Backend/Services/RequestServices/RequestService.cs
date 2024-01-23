@@ -144,7 +144,7 @@ public class RequestService : IRequestService
             // }
             if (addRequestDto.Type == RequestType.DeleteUser) // Delete user handler
             {
-                request.UserId = GetUserId();
+                request.UserId = request.AccountId;
                 _context.Requests.Add(request);
                 await _context.SaveChangesAsync();
 

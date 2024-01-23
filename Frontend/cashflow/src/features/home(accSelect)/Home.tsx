@@ -74,6 +74,9 @@ export const Home: FC<HomeProps> = ({}) => {
                         <p>Id: {user?.id}</p>
                     </div>
                 </header>
+                <div id={'homePageTitle'}>
+                    <p>Account Select</p>
+                </div>
                 <ul id={'bankAccountsList'}>
                     {bankAccounts?.map((account) => (
                         <li key={account.id}>

@@ -29,6 +29,13 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
     const { fetchData, fulfillRequest, createRequest, getUser} = useAdminPanelApi();
 
     useEffect(() => {
+        fetchData(filterUserId,filterRequestId, filterType)
+            .then((newRequests) => {
+                changeRequests(newRequests);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
         const fetchInterval = setInterval(() => {
             fetchData(filterUserId,filterRequestId, filterType)
                 .then((newRequests) => {
@@ -120,6 +127,9 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
     return (
         <div className={'adminPanelContainer'}>
             <img src={arrowPhoto} alt="" id={'filtersButton'} onClick={handleShowFilters}/>
+            <div id={'adminPanelTitle'}>
+                <p>Admin Panel</p>
+            </div>
             <div id={`requestFilters`} className={showFilters ? 'show' : 'hide'}>
                 <div id={'filtersHeader'}>
                     <p>Filters</p>

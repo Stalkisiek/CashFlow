@@ -513,3 +513,11 @@ input::-webkit-inner-spin-button {
     backdrop-filter: blur(10px);
     transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
 }
+
+.adminPanelContainer #adminPanelTitle{
+    font-size: 50px;
+    position: absolute;
+    transform: translateY(-195%) translateX(100%);
+    text-align: center;
+    animation: pulse 2.5s infinite;
+}

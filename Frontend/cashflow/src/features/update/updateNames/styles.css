@@ -37,3 +37,14 @@
 .changeNamesContainer form button:active {
     box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
 }
+
+.changeNamesContainer #updateNamesTitle{
+    font-size: 50px;
+    color: #ff84f9;
+    font-weight: bold;
+
+    position: absolute;
+    transform: translateY(-670%) translateX(-15%);
+    text-align: center;
+    animation: pulse 2.5s infinite;
+}

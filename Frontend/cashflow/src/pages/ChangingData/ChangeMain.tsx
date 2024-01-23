@@ -32,6 +32,9 @@ export const ChangeMain: FC<ChangeMainProps> = ({}) => {
 
     return(
         <div className={'changeHomeContainer'}>
+            <div id={'updateMainTitle'}>
+                <p>Update user data</p>
+            </div>
             <div id={'mainContainer'}>
                 <button onClick={() => handleNames()}>Change names</button>
                 <button onClick={() => handleEmail()}>Change email</button>

@@ -35,8 +35,8 @@ const publicRoutes = [
                 element: <Navigate to="/login" replace/>
             },
             {
-                path: "",
-                element: <MainPage/> /// CHANGE THIS!!!!!
+                path: "/",
+                element: <Navigate to="/login" replace/>
             }
         ]
     }

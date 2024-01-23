@@ -15,6 +15,9 @@ export const UpdateEmail = ({}) => {
 
     return(
         <div className={'changeEmailContainer'}>
+            <div id={'updateEmailTitle'}>
+                <p>Update email</p>
+            </div>
             <form action="" id={'mainForm'}>
                 <div id={'email'}>
                     <label htmlFor="">Email</label>

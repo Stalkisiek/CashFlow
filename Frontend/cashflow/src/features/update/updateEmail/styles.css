@@ -37,3 +37,14 @@
 .changeEmailContainer form button:active {
     box-shadow: 0px 0px 30px 10px rgba(239, 255, 12, 0.48);
 }
+
+.changeEmailContainer #updateEmailTitle{
+    font-size: 50px;
+    color: #ff84f9;
+    font-weight: bold;
+
+    position: absolute;
+    transform: translateY(-720%) translateX(2%);
+    text-align: center;
+    animation: pulse 2.5s infinite;
+}

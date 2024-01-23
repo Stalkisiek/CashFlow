@@ -17,6 +17,9 @@ export const UpdatePassword = ({}) => {
 
     return(
         <div className={'changePasswordContainer'}>
+            <div id={'updatePasswordTitle'}>
+                <p>Update password</p>
+            </div>
             <form action="" id={'mainForm'}>
                 <div id={'name'}>
                     <label htmlFor="">Previous password</label>

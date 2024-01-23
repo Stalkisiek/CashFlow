@@ -79,6 +79,9 @@ export const Savings: FC<SavingsProps> = ({}) => {
                     {/*<p>Name: {bankAccount?.name}</p>*/}
                 </div>
             </header>
+            <div id={'savingsAccountTitle'}>
+                <p>Savings account</p>
+            </div>
             <div id={'accountMoney'}>
                 <div className={'mainSegment'}>
                     <p className={'pulsingValue'}>Balance: {bankAccount?.balance}$</p>

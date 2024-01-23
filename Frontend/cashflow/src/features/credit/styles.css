@@ -288,3 +288,11 @@ input[type=range]:hover {
 input[type=range]:hover::-webkit-slider-runnable-track {
     background: #ffb8f3;;
 }
+
+#mainAccountContainer #creditAccountTitle{
+    font-size: 50px;
+    position: absolute;
+    transform: translateY(-380%) translateX(30%);
+    text-align: center;
+    animation: pulse 2.5s infinite;
+}

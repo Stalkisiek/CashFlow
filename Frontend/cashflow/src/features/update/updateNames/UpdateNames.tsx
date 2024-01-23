@@ -16,6 +16,9 @@ export const UpdateNames = () => {
 
     return(
         <div className={'changeNamesContainer'}>
+            <div id={'updateNamesTitle'}>
+                <p>Update user names</p>
+            </div>
                 <form action="" id={'mainForm'}>
                     <div id={'name'}>
                         <label htmlFor="">Name</label>
