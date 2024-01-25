@@ -515,10 +515,10 @@ input::-webkit-inner-spin-button {
 }
 
 .adminPanelContainer #adminPanelTitle{
-    font-size: 50px;
+    font-size: 40px;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -195%);
+    transform: translate(-50%, -225%);
     text-align: center;
     animation: pulse 2.5s infinite;
 }

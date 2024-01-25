@@ -96,7 +96,7 @@
     position: absolute;
     width: 300px;
     left: 50%;
-    transform: translate(-50%, -545%);
+    transform: translate(-50%, -490%);
     text-align: center;
     animation: pulse 2.5s infinite;
 }

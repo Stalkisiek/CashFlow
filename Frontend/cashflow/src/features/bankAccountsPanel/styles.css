@@ -552,10 +552,10 @@ input::-webkit-inner-spin-button {
 }
 
 .adminPanelContainer #accountsPanelTitle {
-    font-size: 50px;
+    font-size: 40px;
     position: absolute; /* Position it fixed to the viewport */
     left: 50%; /* Center horizontally */
-    transform: translate(-50%, -200%); /* Adjust for the element's own dimensions */
+    transform: translate(-50%, -230%); /* Adjust for the element's own dimensions */
     text-align: center;
     animation: pulse 2.5s infinite;
 }

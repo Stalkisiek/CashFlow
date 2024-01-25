@@ -294,7 +294,7 @@ input[type=range]:hover::-webkit-slider-runnable-track {
     width: 300px;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -460%);
+    transform: translate(-50%, -405%);
     text-align: center;
     animation: pulse 2.5s infinite;
 }
