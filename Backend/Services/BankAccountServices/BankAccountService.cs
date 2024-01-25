@@ -377,7 +377,8 @@ public class BankAccountService : IBankAccountService
                 {
                     Type = RequestType.AddMoney,
                     AccountId = id,
-                    AmountBalance = amount
+                    AmountBalance = amount,
+                    AmountCredit = 0
                 };
                 var tempResponse = await _requestService.CreateRequest(addRequestDto);
                 response.Message = tempResponse.Message != string.Empty ? tempResponse.Message : "Request created";

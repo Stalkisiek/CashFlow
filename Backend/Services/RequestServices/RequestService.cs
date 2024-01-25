@@ -120,11 +120,16 @@ public class RequestService : IRequestService
         
     }
 
-    private int GetMaxRequestId()
+    private async Task<int?> GetMaxRequestId()
     {
-        return _context.Requests.Max(r => r.Id);
+        return await _context.Requests.MaxAsync(r => (int?)r.Id);
     }
-
+    
+    private async Task<int?> GetMaxPreviousRequestId()
+    {
+        return await _context.PreviousRequests.MaxAsync(r => (int?)r.Id);
+    }
+    
     public async Task<ServiceResponse<GetRequestDto>> CreateRequest(AddRequestDto addRequestDto)
     {
         var response = new ServiceResponse<GetRequestDto>();
@@ -139,9 +144,16 @@ public class RequestService : IRequestService
                 response.StatusCode = 400;
             }
             Request request = _mapper.Map<Request>(addRequestDto);
-            request.Id = GetMaxRequestId() + 1;
+
+            int? maxRequestId = await GetMaxRequestId();
+            Console.WriteLine(maxRequestId);
+            request.Id = (maxRequestId.HasValue ? maxRequestId.Value : 0) + 1;
+
             //check if there is already a request of the same type
-            if (await _context.Requests.FirstOrDefaultAsync(r => r.Type == request.Type && r.UserId == GetUserId()) != null)
+            var existingRequest = await _context.Requests
+                .FirstOrDefaultAsync(r => r.Type == request.Type && r.UserId == GetUserId());
+
+            if (existingRequest != null)
             {
                 response.Message = "Request already exists";
                 response.Success = false;
@@ -180,15 +192,17 @@ public class RequestService : IRequestService
 
                 response.Data = _mapper.Map<GetRequestDto>(request);
             }
-            // Adding request to History database 
+            // Adding request to History database
+            int? prevRequestMaxId = await GetMaxPreviousRequestId();
             PreviousRequest previousRequest = new PreviousRequest
             {
+                Id = prevRequestMaxId.HasValue ? prevRequestMaxId.Value + 1 : 1,
                 Status = RequestAcceptMode.Pending,
                 RequestId = request.Id,
                 UserId = GetUserId(),
                 Type = request.Type
             };
-                
+
             _context.PreviousRequests.Add(previousRequest);
             await _context.SaveChangesAsync();
         }
