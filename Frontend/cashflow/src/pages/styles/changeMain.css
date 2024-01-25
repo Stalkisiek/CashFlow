@@ -87,7 +87,8 @@
     font-weight: bold;
     font-size: 50px;
     position: absolute;
-    transform: translateY(-630%) translateX(-10%);
+    left: 50%;
+    transform: translate(-50%, -640%);
     text-align: center;
     animation: pulse 2.5s infinite;
 }

@@ -21,16 +21,30 @@ export const HeaderLoggedAdmin: FC<HeaderProps> = ({ }) => {
         window.location.reload();
     }
 
-    const handleAdminPanel = () => {
-        navigate('/admin/panel');
+    const handleRequestsPanel = () => {
+        navigate('/admin/requests');
+    }
+
+    const handleUsersPanel = () => {
+        navigate('/admin/users');
+    }
+
+    const handleBankAccountsPanel = () => {
+        navigate('/admin/bankAccounts');
     }
 
     return (
         <div id='headerIsAdmin'>
             <img src={logo} alt="logo" onClick={() => { navigate('/home') }} />
             <div className={'elementsOnTheRight'}>
-                <div id={'adminPanelButton'} onClick={handleAdminPanel}>
-                    <p>Admin Panel</p>
+                <div id={'requestsPanelButton'} onClick={handleRequestsPanel}>
+                    <p>Requests</p>
+                </div>
+                <div id={'usersPanelButton'} onClick={handleUsersPanel}>
+                    <p>Users</p>
+                </div>
+                <div id={'bankAccountsPanelButton'} onClick={handleBankAccountsPanel}>
+                    <p>Bank Accounts</p>
                 </div>
                 <div id='logOut' onClick={handleLogout}>
                     <p>Logout <FontAwesomeIcon icon={faSignOutAlt} /></p>

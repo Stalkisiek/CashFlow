@@ -134,14 +134,14 @@ public class RequestService : IRequestService
                 response.StatusCode = 400;
             }
             Request request = _mapper.Map<Request>(addRequestDto);
-            //check if there is already a request of the same type ENABLE LATER CHANGE IT
-            // if (await _context.Requests.FirstOrDefaultAsync(r => r.Type == request.Type && r.UserId == GetUserId()) != null)
-            // {
-            //     response.Message = "Request already exists";
-            //     response.Success = false;
-            //     response.StatusCode = 400;
-            //     return response;
-            // }
+            //check if there is already a request of the same type
+            if (await _context.Requests.FirstOrDefaultAsync(r => r.Type == request.Type && r.UserId == GetUserId()) != null)
+            {
+                response.Message = "Request already exists";
+                response.Success = false;
+                response.StatusCode = 400;
+                return response;
+            }
             if (addRequestDto.Type == RequestType.DeleteUser) // Delete user handler
             {
                 request.UserId = request.AccountId;

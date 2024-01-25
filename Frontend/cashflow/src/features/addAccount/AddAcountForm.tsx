@@ -17,11 +17,15 @@ export const AddAcountForm: FC<AddAcountFormProps> = ({}) => {
 
     const handleRequest = async(nr: number) => {
         try{
-            await fetchData(nr);
-            await navigate(nr === 1 ? '/savings':'/credit');
+            const ifTrue = await fetchData(nr);
+            if(ifTrue){
+                await navigate(nr === 1 ? '/savings':'/credit');
+            }
+            //
         }
         catch (e){
             console.log(e);
+            await navigate('/home');
         }
     }
 

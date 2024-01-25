@@ -1,0 +1,593 @@
+.adminPanelContainer{
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+    height: 80% !important;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s;
+}
+
+.adminPanelContainer #bankAccountsListAdmin {
+    display: flex;
+    /*flex-direction: column;*/
+    flex-direction: column;
+    max-height: none;
+    overflow-y: auto;
+}
+
+.adminPanelContainer #bankAccountsListAdmin::-webkit-scrollbar {
+    width: 10px;
+    background-color: #720045;
+    border-radius: 30px;
+}
+
+.adminPanelContainer #bankAccountsListAdmin::-webkit-scrollbar-thumb {
+    background-color: #ff84f9;
+    border-radius: 30px;
+}
+
+.adminPanelContainer #bankAccountsListAdmin div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.adminPanelContainer #bankAccountsListAdmin div .singleBankAccount{
+    width: 75%;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    border: 4px solid #d50081;
+    box-shadow: 0 0 3px 1px #d50081;
+    border-radius: 5px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.adminPanelContainer #bankAccountsListAdmin div .singleBankAccount:hover{
+    transform: scale(101%);
+    box-shadow: 0 0 20px 1px #d93797;
+}
+
+.adminPanelContainer #bankAccountsListAdmin div .singleBankAccount:last-of-type{
+    margin-bottom: 20px;
+}
+
+.adminPanelContainer #bankAccountsListAdmin div .singleBankAccount > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    flex: 1;
+}
+
+.adminPanelContainer #bankAccountsListAdmin div .singleBankAccount > div > div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div:nth-of-type(1){
+    border-right:4px solid #d50081;
+    font-size: 20px;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div:nth-of-type(2){
+    border-right:4px solid #d50081;
+    font-size: 20px;
+    animation: pulse 2.5s infinite;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div:nth-of-type(3){
+    font-size: 20px;
+    border-right: none;
+    animation: pulse 2.5s infinite;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .decisionBankAccountImages{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column !important;
+    /*margin-top: 20px;*/
+    margin-left: 5px;
+}
+
+
+.adminPanelContainer .decisionBankAccountImages img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 50px;
+    /*width: 45%;*/
+    margin: 5px;
+    padding: 5px;
+    box-shadow: 0 0 5px 1px #d50081;
+    transition: transform 0.2s, box-shadow 0.5s, scale 0.5s;
+}
+
+.adminPanelContainer .decisionBankAccountImages img:hover{
+    scale: 105%;
+    box-shadow: 0px 0px 15px 1px #333333;
+    cursor: pointer;
+}
+
+.adminPanelContainer .decisionBankAccountImages img:active{
+    scale: 90%;
+    box-shadow: 0px 0px 15px 1px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #d50081;
+    padding: 5px;
+    width: 100%;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div > div > img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 30px;
+    /*width: 45%;*/
+    margin: 5px;
+    margin-left: 0;
+    padding: 5px;
+    /*box-shadow: 0 0 5px 1px #d50081;*/
+    transition: transform 0.2s, box-shadow 0.5s, scale 0.5s;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div > div {
+    flex: 1;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div > div:nth-of-type(2){
+    border-bottom: none;
+}
+
+.adminPanelContainer #bankAccountsListAdmin .singleBankAccount > div > div p{
+    text-align: center;
+    margin-right: 5px;
+}
+
+.adminPanelContainer #filtersButton {
+    width: 30px;
+    position: absolute;
+    left: 0; /* Position it on the left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%) translateX(-50%) rotateY(180deg); /* Center vertically */
+    border: 3px solid #8e3191;
+    padding-top: 0px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
+    /* Add other styles for the filtersButton */
+}
+
+.adminPanelContainer #filtersButton:hover {
+    scale: 102%;
+    box-shadow: 0px 0px 15px 5px #d93797;
+    cursor: pointer;
+}
+
+.adminPanelContainer #filtersButton:active {
+    scale: 90%;
+    box-shadow: 0px 0px 15px 5px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer .show{
+    opacity: 1 !important;
+}
+
+.adminPanelContainer .hide{
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.adminPanelContainer #bankAccountsFilters{
+    position: absolute;
+    top: 34%; /* Center vertically */
+    transform: translateX(-120%);
+
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 15px;
+
+    width: 250px;
+    height: 300px !important;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, opacity 0.5s, transform 0.5s;
+}
+
+.adminPanelContainer #bankAccountsFilters > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 7px;
+
+}
+
+.adminPanelContainer #bankAccountsFilters > div:nth-of-type(6){
+    margin-bottom: 10px;
+}
+
+.adminPanelContainer #bankAccountsFilters > div > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+}
+
+.adminPanelContainer #bankAccountsFilters > div > div *{
+    margin-right: 5px;
+
+}
+
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.adminPanelContainer #bankAccountsFilters input[type='number']{
+    display: inline-block;
+    width: 50px;
+
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #bankAccountsFilters input[type='text']:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #bankAccountsFilters input[type='text']{
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #bankAccountsFilters input[type='number']:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #bankAccountsFilters button{
+    width: 40px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0;
+    background: linear-gradient(45deg, #bd38ff, #d700de);
+
+    color: #fff;
+    /*font-size: 18px;*/
+    border: none;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    user-select: none;
+    transition: transform 0.1s, box-shadow 0.3s;
+}
+
+.adminPanelContainer #bankAccountsFilters button:hover{
+    box-shadow: 0 0 5px 1px #d93797;
+}
+
+.adminPanelContainer #bankAccountsFilters button:active{
+    box-shadow: 0px 0px 10px 1px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer #bankAccountsFilters select{
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #bankAccountsFilters select:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #bankAccountsFilters #easyFinalize{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminPanelContainer #bankAccountsFilters input[type='checkbox']{
+    border-radius: 5px;
+    background-color: #ffb8f3;
+    color: #34032c;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #bankAccountsFilters #filtersHeader{
+    position: absolute;
+    top: 0;
+    transform: translateX(110%) translateY(-115%);
+
+    width: 70px;
+    height: 25px;
+
+    border: 3px solid #8e3191;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
+}
+
+.adminPanelContainer #newBankAccountButton {
+    width: 30px;
+    position: absolute;
+    right: 0; /* Position it on the left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%) translateX(50%); /* Center vertically */
+    border: 3px solid #8e3191;
+    padding-top: 0px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
+    /* Add other styles for the filtersButton */
+}
+
+.adminPanelContainer #newBankAccountButton:hover {
+    scale: 102%;
+    box-shadow: 0px 0px 15px 5px #d93797;
+    cursor: pointer;
+}
+
+.adminPanelContainer #newBankAccountButton:active {
+    scale: 90%;
+    box-shadow: 0px 0px 15px 5px rgba(239, 255, 12, 0.48);
+}
+
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+.adminPanelContainer .showNew{
+    opacity: 1 !important;
+}
+
+.adminPanelContainer .hideNew{
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.adminPanelContainer #bankAccountNew{
+    position: absolute;
+    top: 34%; /* Center vertically */
+    transform: translateX(120%);
+    right: 0;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 15px;
+
+    width: 200px;
+    height: 220px !important;
+    color: #ff84f9;
+
+    font-weight: bold;
+    border-radius: 15px;
+    border: 5px solid #d50081;
+    padding-top: 0px;
+
+    box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, opacity 0.5s, transform 0.5s;
+}
+
+.adminPanelContainer #bankAccountNew > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+}
+
+.adminPanelContainer #bankAccountNew > div > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+}
+
+.adminPanelContainer #bankAccountNew > div:nth-of-type(4){
+    margin-bottom: 10px;
+}
+
+.adminPanelContainer #bankAccountNew > div > div *{
+    margin-right: 5px;
+
+}
+
+.adminPanelContainer #bankAccountNew input[type='number']{
+    display: inline-block;
+    width: 50px;
+
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #bankAccountNew input[type='number']:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #bankAccountNew button{
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0;
+    background: linear-gradient(45deg, #bd38ff, #d700de);
+
+    color: #fff;
+    /*font-size: 18px;*/
+    border: none;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    user-select: none;
+    transition: transform 0.1s, box-shadow 0.3s;
+}
+
+.adminPanelContainer #bankAccountNew button:hover{
+    box-shadow: 0 0 5px 1px #d93797;
+}
+
+.adminPanelContainer #bankAccountNew button:active{
+    box-shadow: 0px 0px 10px 1px rgba(239, 255, 12, 0.48);
+}
+
+.adminPanelContainer #bankAccountNew select{
+    display: inline-block;
+    width: 117px;
+    text-align: center;
+    border-radius: 5px;
+    height: 20px;
+    background-color: #ffb8f3;
+    border: 2px solid #ff02b3;
+    /*outline: 2px solid #ff70c9;*/
+    box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);
+
+    transition: box-shadow 0.5s;
+}
+
+.adminPanelContainer #bankAccountNew select:hover{
+    box-shadow: 0px 0px 20px 15px rgb(129, 20, 178);
+}
+
+.adminPanelContainer #bankAccountNew #userNewHeader{
+    position: absolute;
+    top: 0;
+    transform: translateX(29%) translateY(-115%);
+
+    width: 120px;
+    height: 25px;
+
+    border: 3px solid #8e3191;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px 5px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
+}
+
+.adminPanelContainer #bankAccountPanelTitle {
+    font-size: 50px;
+    position: fixed; /* Position it fixed to the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -200%); /* Adjust for the element's own dimensions */
+    text-align: center;
+    animation: pulse 2.5s infinite;
+}
+
+.swalInput{
+    display: inline-block;
+    width: 150px;
+    /*text-align: center;*/
+    border-radius: 15px;
+    height: 20px;
+    /*background-color: #ffb8f3;*/
+    border: 2px solid #34032c;;
+
+    /*outline: 2px solid #ff70c9;*/
+    /*box-shadow: 8px 8px 120px 1px rgb(129, 20, 178);*/
+
+}
+
+.swalInput::placeholder{
+    color: #34032c;
+}
+
+.swalSelect{
+    display: inline-block;
+    width: 100px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 15px;
+    height: 40px;
+    background-color: #ffb8f3;
+    border: 2px solid #34032c;;
+    /*outline: 2px solid #ff70c9;*/
+    /*box-shadow: 8px 8px 37px 6px rgb(129, 20, 178);*/
+}

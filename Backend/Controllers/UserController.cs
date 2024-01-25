@@ -23,13 +23,13 @@ public class UserController : ControllerBase
         _authRepository = authRepository;
     }
 
-    [HttpGet]   
-    public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> GetAllUsers()
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> GetAllUsers(int? id = null, int? authLvl = null, string name = null, string surname = null, string email = null)
     {
-        var response = await _userService.GetAllUsers();
+        var response = await _userService.GetAllUsers(id, authLvl, name, surname, email);
         return StatusCode(response.StatusCode, response);
     }
-    
+
     [HttpGet("self")]
     public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetCurrentUser()
     {

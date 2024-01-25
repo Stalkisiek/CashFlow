@@ -76,7 +76,8 @@
     font-weight: bold;
 
     position: absolute;
-    transform: translateY(-675%) translateX(-12%);
+    left: 50%;
+    transform: translate(-50%, -675%);
     text-align: center;
     animation: pulse 2.5s infinite;
 }

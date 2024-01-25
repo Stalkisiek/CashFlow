@@ -44,7 +44,8 @@
     font-weight: bold;
 
     position: absolute;
-    transform: translateY(-670%) translateX(-15%);
+    left: 50%;
+    transform: translate(-50%, -675%);
     text-align: center;
     animation: pulse 2.5s infinite;
 }

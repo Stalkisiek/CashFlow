@@ -4,6 +4,7 @@ import {ServiceResponse} from "../../types/ServiceResponse";
 import {BankAccount} from "../../types/BankAccount";
 import '../alerts/styles.css'
 import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 
 export const useAddAccountApi = () => {
@@ -32,10 +33,20 @@ export const useAddAccountApi = () => {
             const serviceResponse: ServiceResponse<BankAccount> = await response.json();
 
             if(!serviceResponse.success){
-                swal("Oops!", serviceResponse.message, "error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: serviceResponse.message,
+                })
                 throw new Error(serviceResponse.message);
 
             }
+            Swal.fire({
+                icon: 'success',
+                title: 'Account created!',
+                text: 'Account created successfully!',
+            })
+            return serviceResponse.success;
         }
         catch (e:any) {
             console.error(e);

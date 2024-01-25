@@ -91,7 +91,7 @@
     border-right: none;
 }
 
-.adminPanelContainer #requestsList .decisionRequestsImages{
+.adminPanelContainer #requestsList .decisionUsersImages{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,7 +101,7 @@
 }
 
 
-.adminPanelContainer .decisionRequestsImages img{
+.adminPanelContainer .decisionUsersImages img{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,13 +114,13 @@
     transition: transform 0.2s, box-shadow 0.5s, scale 0.5s;
 }
 
-.adminPanelContainer .decisionRequestsImages img:hover{
+.adminPanelContainer .decisionUsersImages img:hover{
     scale: 105%;
     box-shadow: 0px 0px 15px 1px #333333;
     cursor: pointer;
 }
 
-.adminPanelContainer .decisionRequestsImages img:active{
+.adminPanelContainer .decisionUsersImages img:active{
     scale: 90%;
     box-shadow: 0px 0px 15px 1px rgba(239, 255, 12, 0.48);
 }
@@ -517,7 +517,8 @@ input::-webkit-inner-spin-button {
 .adminPanelContainer #adminPanelTitle{
     font-size: 50px;
     position: absolute;
-    transform: translateY(-195%) translateX(100%);
+    left: 50%;
+    transform: translate(-50%, -195%);
     text-align: center;
     animation: pulse 2.5s infinite;
 }

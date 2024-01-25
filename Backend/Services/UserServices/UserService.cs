@@ -48,7 +48,7 @@ public class UserService : IUserService
     }
 
     // Method to retrieve a list of all users, subject to authorization level
-    public async Task<ServiceResponse<List<GetUserDto>>> GetAllUsers()
+    public async Task<ServiceResponse<List<GetUserDto>>> GetAllUsers(int? id = null, int? authLvl = null, string? name = null, string? surname = null, string? email = null)
     {
         var response = new ServiceResponse<List<GetUserDto>>();
         try
@@ -59,8 +59,30 @@ public class UserService : IUserService
             // Check if the user has sufficient authorization level
             if ((int)user.AuthorizationLevel > (int)AuthorizationLevel.User)
             {
+                var query = _context.Users.AsQueryable();
+                if (id.HasValue)
+                {
+                    query = query.Where(r => r.Id == id);
+                }
+                if(authLvl.HasValue)
+                {
+                    query = query.Where(r => (int)r.AuthorizationLevel == authLvl);
+                }
+                if(name != null)
+                {
+                    query = query.Where(r => r.Name == name);
+                }
+                if(surname != null)
+                {
+                    query = query.Where(r => r.Surname == surname);
+                }
+                if(email != null)
+                {
+                    query = query.Where(r => r.Email == email);
+                }
+
                 // Map all users to GetUserDto and return the list
-                response.Data = await _context.Users.Select(u => _mapper.Map<GetUserDto>(u)).ToListAsync();
+                response.Data = await query.Select(u => _mapper.Map<GetUserDto>(u)).ToListAsync();
                 response.Message = ((int)AuthorizationLevel.User).ToString();
                 return response;
             }

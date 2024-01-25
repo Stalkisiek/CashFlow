@@ -10,9 +10,9 @@ import arrowPhoto from '../../pictures/arrow.png'
 import Swal from "sweetalert2";
 import {User} from "../../types/User";
 
-interface AdminPanelProps { }
+interface RequestsPanelProps { }
 
-export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
+export const RequestsPanel: FC<RequestsPanelProps> = ({ }) => {
     const [requests, changeRequests] = useState<Request[] | undefined>([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
     const [showNewRequest, setShowNewRequest] = useState<boolean>(false);
@@ -260,7 +260,7 @@ export const AdminPanel: FC<AdminPanelProps> = ({ }) => {
 
                                 {/* Add more properties here as needed */}
                             </li>
-                            <div className={'decisionRequestsImages'}>
+                            <div className={'decisionUsersImages'}>
                                 <img src={plusPhoto} alt="" onClick={() => handleAcceptClick(request.id, true)}/>
                                 <img src={minusPhoto} alt="" onClick={() => handleAcceptClick(request.id, false)}/>
                             </div>
