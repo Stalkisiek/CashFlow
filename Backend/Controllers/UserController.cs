@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Controllers;
 
-// [Authorize] // Moved Authorized attribute to controller level
+[Authorize] // Moved Authorized attribute to controller level
 [ApiController]
 [Route("api/[controller]s")]
 public class UserController : ControllerBase

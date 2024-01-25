@@ -33,7 +33,14 @@ public class AuthRepository : IAuthRepository
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         return user is not null;
     }
-
+    
+    // Get max id
+    public async Task<int> GetMaxId()
+    {
+        var maxId = await _context.Users.MaxAsync(u => u.Id);
+        return maxId;
+    }
+    
     // Method to handle user login
     public Task<ServiceResponse<string>> Login(LoginUserDto loginUserDto)
     {
@@ -113,7 +120,8 @@ public class AuthRepository : IAuthRepository
                     user.AuthorizationLevel = AuthorizationLevel.User;
                     user.CreatedAt = DateTime.Now;
                     user.UpdatedAt = DateTime.Now;
-
+                    user.Id = await GetMaxId() + 1;
+                    
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 

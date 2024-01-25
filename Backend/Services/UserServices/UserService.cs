@@ -37,8 +37,7 @@ public class UserService : IUserService
     // Helper method to extract the current user's ID from the claims
     private int GetUserId()
     {
-        // return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!); CHANGE
-        return 2;
+        return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
 
     // Helper method to get the authorization level of the current user
@@ -58,7 +57,7 @@ public class UserService : IUserService
             var user = (await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId()))!;
 
             // Check if the user has sufficient authorization level
-            if (true || (int)user.AuthorizationLevel > (int)AuthorizationLevel.User || true) // CHANGE
+            if ((int)user.AuthorizationLevel > (int)AuthorizationLevel.User) 
             {
                 var query = _context.Users.AsQueryable();
                 if (id.HasValue)
