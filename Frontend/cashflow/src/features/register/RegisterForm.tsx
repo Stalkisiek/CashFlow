@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import React, {FC, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import logo from '../../pictures/logoWithoutBackground.png'
 import {useRegisterApi} from "./api";

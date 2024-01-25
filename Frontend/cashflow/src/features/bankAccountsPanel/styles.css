@@ -4,7 +4,7 @@
     flex-direction: column;
 
     width: 50%;
-    height: 80% !important;
+    height: 70% !important;
     color: #ff84f9;
 
     font-weight: bold;
@@ -12,6 +12,7 @@
     font-size: 15px;
     border: 5px solid #d50081;
     padding-top: 0;
+    margin-top: 80px;
 
     box-shadow: 8px 8px 37px 11px rgb(129, 20, 178);
     background-color: rgba(115, 0, 75, 0.76);
@@ -552,12 +553,26 @@ input::-webkit-inner-spin-button {
 }
 
 .adminPanelContainer #accountsPanelTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     font-size: 40px;
-    position: absolute; /* Position it fixed to the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -230%); /* Adjust for the element's own dimensions */
+    position: absolute;
+    width: 340px;
+    height: 50px;
+    left: 50%;
+    transform: translate(-50%, -125%);
     text-align: center;
     animation: pulse 2.5s infinite;
+
+    color: #ff84f9;
+    border: 3px solid #8e3191;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 1px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
 }
 
 .swalInput{

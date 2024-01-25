@@ -290,11 +290,23 @@ input[type=range]:hover::-webkit-slider-runnable-track {
 }
 
 #mainAccountContainer #savingsAccountTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     font-size: 40px;
-    width: 300px;
     position: absolute;
+    width: 320px;
+    height: 50px;
     left: 50%;
-    transform: translate(-50%, -405%);
+    transform: translate(-50%, -125%);
     text-align: center;
     animation: pulse 2.5s infinite;
+
+    border: 3px solid #8e3191;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 1px rgb(129, 20, 178);
+    background-color: rgba(115, 0, 75, 0.76);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, width 0.5s, height 0.5s, scale 0.1s;
 }
