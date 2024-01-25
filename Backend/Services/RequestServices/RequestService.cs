@@ -120,6 +120,11 @@ public class RequestService : IRequestService
         
     }
 
+    private int GetMaxRequestId()
+    {
+        return _context.Requests.Max(r => r.Id);
+    }
+
     public async Task<ServiceResponse<GetRequestDto>> CreateRequest(AddRequestDto addRequestDto)
     {
         var response = new ServiceResponse<GetRequestDto>();
@@ -134,6 +139,7 @@ public class RequestService : IRequestService
                 response.StatusCode = 400;
             }
             Request request = _mapper.Map<Request>(addRequestDto);
+            request.Id = GetMaxRequestId() + 1;
             //check if there is already a request of the same type
             if (await _context.Requests.FirstOrDefaultAsync(r => r.Type == request.Type && r.UserId == GetUserId()) != null)
             {

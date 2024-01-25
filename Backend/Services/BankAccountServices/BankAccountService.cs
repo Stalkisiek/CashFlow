@@ -34,7 +34,12 @@ public class BankAccountService : IBankAccountService
     {
         return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
-
+    
+    private int getMaxId()
+    {
+        return _context.BankAccounts.Max(b => b.Id);
+    }
+    
     // Helper method to get the authorization level of the current user
     private async Task<int> GetUserAuthLvl()
     {
@@ -185,6 +190,8 @@ public class BankAccountService : IBankAccountService
             {
                 bankAccount.UserId = GetUserId();
                 bankAccount.Name = user.Name + "_" + user.Surname + "_" + bankAccount.Type.ToString();
+                bankAccount.Id = getMaxId() + 1;
+                
                 _context.BankAccounts.Add(bankAccount);
                 await _context.SaveChangesAsync();
                 response.Data = _mapper.Map<GetBankAccountDto>(bankAccount);
