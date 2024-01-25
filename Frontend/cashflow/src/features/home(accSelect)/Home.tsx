@@ -68,7 +68,7 @@ export const Home: FC<HomeProps> = ({}) => {
                     </div>
                     <div id={'AdditionalInfo'}>
                         <p>Email: {user?.email}</p>
-                        <p>Account Level: {user?.authorizationLevel}</p>
+                        <p>Account Level: {user?.authorizationLevel === 1 ? 'User' : user?.authorizationLevel === 2 ? 'Admin' : 'Server'}</p>
                     </div>
                     <div id={'idNumber'}>
                         <p>Id: {user?.id}</p>

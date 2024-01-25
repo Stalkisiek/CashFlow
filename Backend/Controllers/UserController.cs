@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Controllers;
 
-[Authorize] // Moved Authorized attribute to controller level
+// [Authorize] // Moved Authorized attribute to controller level
 [ApiController]
 [Route("api/[controller]s")]
 public class UserController : ControllerBase
@@ -22,7 +22,7 @@ public class UserController : ControllerBase
         _userService = userService;
         _authRepository = authRepository;
     }
-
+    
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> GetAllUsers(int? id = null, int? authLvl = null, string name = null, string surname = null, string email = null)
     {
