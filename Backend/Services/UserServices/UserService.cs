@@ -84,7 +84,7 @@ public class UserService : IUserService
 
                 // Map all users to GetUserDto and return the list
                 response.Data = await query.Select(u => _mapper.Map<GetUserDto>(u)).ToListAsync();
-                response.Message = ((int)AuthorizationLevel.User).ToString();
+                response.Message = "";
                 return response;
             }
             else
