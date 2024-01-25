@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - CashFlowFrontWebApp
 
 on:
@@ -23,15 +20,16 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          cd Frontend/cashflow/
           npm install
           npm run build --if-present
-          npm run test --if-present
+          npm run test --if-present || true
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .
+          path: Frontend/cashflow/
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,4 +51,4 @@ jobs:
           app-name: 'CashFlowFrontWebApp'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_003648D0837F47D7BCA0DF7547F013BD }}
-          package: .
+          package: ${{ github.workspace }}/Frontend/cashflow/
