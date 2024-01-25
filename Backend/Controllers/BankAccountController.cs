@@ -35,9 +35,9 @@ public class BankAccountController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> GetAll()
+    public async Task<ActionResult<ServiceResponse<List<GetBankAccountDto>>>> GetAll(int? id, int? type)
     {
-        var response = await _bankAccountService.GetAll();
+        var response = await _bankAccountService.GetAll(id, type);
         return StatusCode(response.StatusCode, response);
     }
 
@@ -51,8 +51,16 @@ public class BankAccountController : ControllerBase
 
     [HttpPut]
     public async Task<ActionResult<ServiceResponse<GetBankAccountDto>>> UpdateBankAccount(
-        UpdateBankAccountDto updateBankAccountDto)
+        int id, int type, double balance, double credit)
     {
+        UpdateBankAccountDto updateBankAccountDto = new()
+        {
+            Id = id,
+            Type = (BankAccountType) type,
+            Balance = balance,
+            CreditBalance = credit
+        };
+        
         var response = await _bankAccountService.UpdateBankAccount(updateBankAccountDto);
         return StatusCode(response.StatusCode, response);
     }

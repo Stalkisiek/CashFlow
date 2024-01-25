@@ -42,7 +42,7 @@ public class BankAccountService : IBankAccountService
         return user is null ? -1 : (int)user.AuthorizationLevel;
     }
     
-    public async Task<ServiceResponse<List<GetBankAccountDto>>> GetAll()
+    public async Task<ServiceResponse<List<GetBankAccountDto>>> GetAll(int? id = null, int? type = null)
     {
         var response = new ServiceResponse<List<GetBankAccountDto>>();
         try
@@ -55,7 +55,20 @@ public class BankAccountService : IBankAccountService
                 return response;
             }
             
-            response.Data = await _context.BankAccounts.Select(b => _mapper.Map<GetBankAccountDto>(b)).ToListAsync();
+            var query = _context.BankAccounts.AsQueryable();
+            if (id.HasValue)
+            {
+                query = query.Where(r => r.Id == id);
+            }
+
+            if (type.HasValue)
+            {
+                query = query.Where(r => r.Type == (BankAccountType)type);
+            }
+            
+            
+            // Map all users to GetUserDto and return the list
+            response.Data = await query.Select(u => _mapper.Map<GetBankAccountDto>(u)).ToListAsync();
         }
         catch (Exception e)
         {
@@ -198,13 +211,13 @@ public class BankAccountService : IBankAccountService
                 response.StatusCode = 401;
                 return response;
             }
-            
+
             //Check if accounts exists
             var bankAccount = await _context.BankAccounts.FirstOrDefaultAsync(b => b.Id == updateBankAccountDto.Id);
             if (bankAccount is null)
             {
                 response.Success = false;
-                response.Message = "Not found";
+                response.Message = updateBankAccountDto.Type + " Not found";
                 response.StatusCode = 404;
                 return response;
             }

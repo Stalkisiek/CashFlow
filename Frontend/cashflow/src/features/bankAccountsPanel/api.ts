@@ -80,21 +80,38 @@ export const useAdminPanelApi = () => {
         }
     }
 
-    const updateBankAccount = async (id: number, type?: number, savings?:number, credit?:number) => {
+    const updateBankAccount = async (id:number, prevType:number, prevBalance:number, prevCredit:number, type?:number, balance?:number, credit?:number) => {
         try{
-            const response = await fetch(`${API_URL}/BankAccounts`, {
+            let url = `${API_URL}/BankAccounts`;
+
+            const queryParams = new URLSearchParams();
+            queryParams.append('id', id.toString());
+            if (type !== undefined && type !== 0) {
+                queryParams.append('type', encodeURIComponent(type.toString()));
+            } else {
+                queryParams.append('type', encodeURIComponent(prevType.toString()));
+            }
+            if (balance !== undefined && balance !== 0) {
+                queryParams.append('balance', encodeURIComponent(balance.toString()));
+            } else {
+                queryParams.append('balance', encodeURIComponent(prevBalance.toString()));
+            }
+            if (credit !== undefined && credit !== 0) {
+                queryParams.append('credit', encodeURIComponent(credit.toString()));
+            } else {
+                queryParams.append('credit', encodeURIComponent(prevCredit.toString()));
+            }
+
+
+            // console.log(queryParams);
+            url += '?' + queryParams.toString();
+            const response = await fetch(url, {
                 method: 'PUT',
                 headers: headersCreator(),
-                body: JSON.stringify({
-                    id: id,
-                    type: type,
-                    balance: savings,
-                    creditBalance: credit,
-                })
             });
 
             const serviceResponse: ServiceResponse<BankAccount> = await response.json();
-
+            // console.log(serviceResponse);
             if(!serviceResponse.success){
                 Swal.fire({
                     icon: 'error',

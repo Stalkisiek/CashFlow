@@ -128,7 +128,7 @@ export const RequestsPanel: FC<RequestsPanelProps> = ({ }) => {
         <div className={'adminPanelContainer'}>
             <img src={arrowPhoto} alt="" id={'filtersButton'} onClick={handleShowFilters}/>
             <div id={'adminPanelTitle'}>
-                <p>Admin Panel</p>
+                <p>Requests Panel</p>
             </div>
             <div id={`requestFilters`} className={showFilters ? 'show' : 'hide'}>
                 <div id={'filtersHeader'}>
