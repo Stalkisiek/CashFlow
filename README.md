@@ -4,20 +4,47 @@ Welcome to the CashFlow Web Application! This application provides users with a 
 
 ## Table of Contents
 
-- 🎥 [Video Tutorial](#video-tutorial)
-- ✨ [Features](#features)
-- 📂 [Folder Structure](#folder-structure)
-- 📂 [Frontend Folder Structure](#frontend-folder-structure)
 - 🚀 [Getting Started](#getting-started)
   - 🔧 [Database Configuration](#database-configuration)
   - 🌐 [Backend Setup](#backend-setup)
   - 🌟 [Frontend Setup](#frontend-setup)
+- 🎥 [Video Tutorial](#video-tutorial)
+- ✨ [Features](#features)
+- 📂 [Folder Structure](#folder-structure)
+- 📂 [Frontend Folder Structure](#frontend-folder-structure)
 - 🔒 [Authentication](#authentication)
 - 🔗 [Advanced Relationships](#advanced-relationships)
 - 👤 [Getting User ID](#getting-user-id)
 - 📷 [Screenshots](#screenshots)
 - 🚀 [Contributions and Feedback](#contributions-and-feedback)
 - 📜 [License](#license)
+
+## Getting Started
+
+### Database Configuration 🔧
+
+Before getting started, make sure to configure your database settings:
+
+1. Change the database connection string in the backend project to match your database server.
+
+### Backend Setup 🌐
+
+To set up the backend of the CashFlow Web Application:
+
+1. Clone the repository: `git clone https://github.com/your-username/cashflow-web-app.git`
+2. Navigate to the project directory: `cd cashflow-web-app`
+3. Apply database migrations: `dotnet ef database update`
+4. Start the backend server: `dotnet run` in the `./Backend` directory.
+
+### Frontend Setup 🌟
+
+To set up the frontend of the CashFlow Web Application:
+
+1. Navigate to the frontend directory: `cd ./Frontend/cashflow`
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
+
+Now, you have both the backend and frontend up and running!
 
 ## 🎥 Video Tutorial
 
@@ -51,33 +78,6 @@ The frontend follows a structured approach to organizing its components:
 - 📄 `pages`: Page layout and routing configuration.
 - 🖼️ `pictures`: Includes all the images used in the application.
 - 💼 `types`: Definition of custom types and interfaces.
-
-## Getting Started
-
-### Database Configuration 🔧
-
-Before getting started, make sure to configure your database settings:
-
-1. Change the database connection string in the backend project to match your database server.
-
-### Backend Setup 🌐
-
-To set up the backend of the CashFlow Web Application:
-
-1. Clone the repository: `git clone https://github.com/your-username/cashflow-web-app.git`
-2. Navigate to the project directory: `cd cashflow-web-app`
-3. Apply database migrations: `dotnet ef database update`
-4. Start the backend server: `dotnet run` in the `./Backend` directory.
-
-### Frontend Setup 🌟
-
-To set up the frontend of the CashFlow Web Application:
-
-1. Navigate to the frontend directory: `cd ./Frontend/cashflow`
-2. Install dependencies: `npm install`
-3. Start the development server: `npm start`
-
-Now, you have both the backend and frontend up and running!
 
 ## Authentication 🔒
 
