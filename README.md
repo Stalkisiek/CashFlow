@@ -74,8 +74,7 @@ You can easily retrieve the logged-in user's ID for authorization and personaliz
 ## Screenshots 📷
 
 **Login Page**
-<img src="https://github.com/Stalkisiek/CashFlow/assets/117647150/2d3acf5c-9ae8-480d-be5e-d9854fe35c0f" alt="Login Page" width="400" />
-![Login Page](<img src="https://github.com/Stalkisiek/CashFlow/assets/117647150/2d3acf5c-9ae8-480d-be5e-d9854fe35c0f" alt="Login Page" width="400" />)
+![(<img src="https://github.com/Stalkisiek/CashFlow/assets/117647150/2d3acf5c-9ae8-480d-be5e-d9854fe35c0f" alt="Login Page" width="400" />)]
 - Login option
 
 **Register Page**
