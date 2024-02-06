@@ -20,7 +20,8 @@ Welcome to the CashFlow Web Application! This application provides users with a 
 
 Watch this comprehensive video tutorial to learn how to use all the features of the CashFlow Web Application:
 
-[![CashFlow Web App Tutorial](https://imgur.com/a/VKsorQD)](https://www.youtube.com/watch?v=gdAbCZMJegM&t=333s&ab_channel=Stalkisiek)
+[![CashFlow Web App Tutorial](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/05988d2c-d412-43b7-937f-08fa5672c1c5)
+)](https://www.youtube.com/watch?v=gdAbCZMJegM&t=333s&ab_channel=Stalkisiek)
 
 ## Features
 
@@ -75,29 +76,36 @@ You can easily retrieve the logged-in user's ID for authorization and personaliz
 ## Screenshots 📷
 
 **Login Page**
-![Login Page](https://imgur.com/a/jdY3qZm)
+![Login Page](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/2d3acf5c-9ae8-480d-be5e-d9854fe35c0f)
+)
 - Login option
 
 **Register Page**
-![Register Page](https://imgur.com/a/rJxelfL)
+![Register Page](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/c24cc544-5d13-463a-bfb9-6bc2a25eea8b)
+)
 
 **Main Page**
-![Main Page](https://imgur.com/a/i5rBBaF)
+![Main Page](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/582a718e-28cb-4659-833d-0999763d20d5)
+)
 
 **Bank Account**
-![Bank Account](https://imgur.com/a/ShYejdO)
+![Bank Account](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/f581ab7b-644f-454e-98a9-83c224f61a7b)
+)
 - Bank account details with ID in the top right corner
 
 **User Panel**
-![User Panel](https://imgur.com/a/C7tbFHf)
+![User Panel](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/383d463a-d51b-497e-96cf-8a3b1a6ce360)
+)
 - Administrative panel for users with filtering option
 
 **Bank Accounts Panel**
-![Bank Accounts Panel](https://imgur.com/a/NL6gfTY)
+![Bank Accounts Panel](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/822e2709-6abc-4b05-adfb-c78501f05838)
+)
 - Administrative panel for bank accounts with filtering option
 
 **Requests Panel**
-![Requests Panel](https://imgur.com/a/dzKl83I)
+![Requests Panel](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/058c1abc-12fd-4716-87c1-a23b51073e03)
+)
 - Administrative panel for requests with filtering option
 
 ## Contributions and Feedback 🚀
