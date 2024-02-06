@@ -1,4 +1,4 @@
-![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/cddec943-0c53-4217-861e-390d0eb691de)# 🌟 CashFlow Web Application 🌟
+# 🌟 CashFlow Web Application 🌟
 
 Welcome to the CashFlow Web Application! This application provides users with a streamlined web interface for efficient banking operations. It's built using the .NET Web API framework, Entity Framework for database management, and modern web development practices.
 
