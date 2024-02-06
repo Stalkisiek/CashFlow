@@ -19,9 +19,7 @@ Welcome to the CashFlow Web Application! This application provides users with a 
 ## 🎥 Video Tutorial
 
 Watch this comprehensive video tutorial to learn how to use all the features of the CashFlow Web Application:
-(![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/05988d2c-d412-43b7-937f-08fa5672c1c5)
-[![CashFlow Web App Tutorial](![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/05988d2c-d412-43b7-937f-08fa5672c1c5)
-)](https://www.youtube.com/watch?v=gdAbCZMJegM&t=333s&ab_channel=Stalkisiek)
+(![image](https://github.com/Stalkisiek/CashFlow/assets/117647150/05988d2c-d412-43b7-937f-08fa5672c1c5))](https://www.youtube.com/watch?v=gdAbCZMJegM&t=333s&ab_channel=Stalkisiek)
 
 ## Features
 
